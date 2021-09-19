@@ -1,101 +1,79 @@
-# Rules of Conway's Game of Life
+# 康威生命游戏规则
 
-*Note: If you are already familiar with Conway's Game of Life and its rules,
-feel free to skip to the next section!*
+*注：如果你已经熟悉了康威的生命游戏及其规则。请随意跳到下一节！*。
 
-[Wikipedia gives a great description of the rules of Conway's Game of
-Life:][wikipedia]
+[维基百科对康威生命游戏的规则做了一个很好的描述:][wikipedia]
 
-> The universe of the Game of Life is an infinite two-dimensional orthogonal
-> grid of square cells, each of which is in one of two possible states, alive or
-> dead, or "populated" or "unpopulated". Every cell interacts with its eight
-> neighbours, which are the cells that are horizontally, vertically, or
-> diagonally adjacent. At each step in time, the following transitions occur:
+> 生命游戏的宇宙是一个无限的二维正交方格网格，
+> 每个方格都处于两种可能状态中的一种，活或死，（或分别为有人居住和无人居住）。
+> 每个单元格与其八个相邻单元格相互作用，这些单元格是水平、垂直或对角相邻的单元格。
+> 在时间的每一步，都会发生以下转换：
 >
-> 1. Any live cell with fewer than two live neighbours dies, as if caused by
->    underpopulation.
+> 1. 任何具有少于两个活邻居的活细胞都会死亡，就像人口不足一样。
+> 2. 任何有两个或三个活邻居的活细胞都会传给下一代。
+> 3. 任何拥有三个以上活邻居的活细胞都会死亡，就像人口过多一样。
+> 4. 任何只有三个活邻居的死细胞都会变成活细胞，就像通过繁殖一样。
 >
-> 2. Any live cell with two or three live neighbours lives on to the next
->    generation.
+> 这些将自动机的行为与现实生活进行比较的规则可以浓缩为以下内容：
 >
-> 3. Any live cell with more than three live neighbours dies, as if by
->    overpopulation.
+> 1. 任何有两个或三个活邻居的活细胞都能存活。
+> 2. 任何具有三个活邻居的死细胞都会成为活细胞。
+> 3. 所有其他活细胞在下一代中死亡。同样，所有其他死细胞保持死亡。 
 >
-> 4. Any dead cell with exactly three live neighbours becomes a live cell, as if
->    by reproduction.
->
-> The initial pattern constitutes the seed of the system. The first generation
-> is created by applying the above rules simultaneously to every cell in the
-> seed—births and deaths occur simultaneously, and the discrete moment at which
-> this happens is sometimes called a tick (in other words, each generation is a
-> pure function of the preceding one). The rules continue to be applied
-> repeatedly to create further generations.
+> 初始模式构成了系统的种子。 
+> 第一代是通过将上述规则同时应用于种子中的每个细胞，
+> 无论是活的还是死的； 出生和死亡同时发生，
+> 发生这种情况的离散时刻有时称为滴答声。 每
+> 一代都是前一代的纯函数。 这些规则不断被反复应用以创造更多的世代。  
 
 [wikipedia]: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
-Consider the following initial universe:
+考虑以下初始宇宙:
 
 <img src='../images/game-of-life/initial-universe.png' alt='Initial Universe' width=80 />
 
-We can calculate the next generation by considering each cell. The top left cell
-is dead. Rule (4) is the only transition rule that applies to dead
-cells. However, because the top left cell does not have exactly three live
-neighbors, the transition rule does not apply, and it remains dead in the next
-generation. The same goes for every other cell in the first row as well.
+我们可以通过考虑每个细胞来计算下一代。左上角的单元格已死。规则 (4) 是唯一适用于死细胞的转换规则。然而，因为左上角的单元格没有正好三个活着的邻居，所以转换规则不适用，它在下一代中仍然是死的。第一行中的每个其他单元格也是如此。
 
-Things get interesting when we consider the top live cell, in the second row,
-third column. For live cells, any of the first three rules potentially
-applies. In this cell's case, it has only one live neighbor, and therefore rule
-(1) applies: this cell will die in the next generation. The same fate awaits the
-bottom live cell.
+当我们考虑第二行第三列的顶部活细胞时，事情变得有趣了。对于活细胞，前三个规则中的任何一个都可能适用。在这个单元格的情况下，它只有一个活着的邻居，因此规则（1）适用：这个单元格将在下一代死亡。同样的命运等待着底部的活细胞。
 
-The middle live cell has two live neighbors: the top and bottom live cells. This
-means that rule (2) applies, and it remains live in the next generation.
+中间的活细胞有两个活的邻居：顶部和底部的活细胞。这意味着规则 (2) 适用，并且它在下一代中仍然存在。
 
-The final interesting cases are the dead cells just to the left and right of the
-middle live cell. The three live cells are all neighbors both of these cells,
-which means that rule (4) applies, and these cells will become alive in the next
-generation.
+最后一个有趣的例子是中间活细胞左侧和右侧的死细胞。三个活细胞都是这两个细胞的邻居，这意味着规则（4）适用，这些细胞将在下一代变得活跃。
 
-Put it all together, and we get this universe after the next tick:
+把它们放在一起，我们在下一个滴答后得到这个宇宙：
 
 <img src='../images/game-of-life/next-universe.png' alt='Next Universe' width=80 />
 
-From these simple, deterministic rules, strange and exciting behavior emerges:
+从这些简单的、确定性的规则中，出现了奇怪而令人兴奋的行为:
 
 | Gosper's glider gun | Pulsar | Space ship |
 |---|---|---|
-| ![Gosper's glider gun](https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif) | ![Pulsar](https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif) | ![Lighweight space ship](https://upload.wikimedia.org/wikipedia/commons/3/37/Game_of_life_animated_LWSS.gif) |
+| ![Gosper's glider gun](../images/wiki/Gospers_glider_gun.gif) | ![Pulsar](../images/wiki/Game_of_life_pulsar.gif) | ![Lighweight space ship](../images/wiki/Game_of_life_animated_LWSS.gif) |
 
 <center>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/C2vgICfQawE?rel=0&amp;start=65" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </center>
 
-## Exercises
+## 练习
 
-* Compute by hand the next tick of our example universe. Notice anything
-  familiar?
+* 用手计算我们的例子宇宙的下一个刻度。注意到任何熟悉的东西吗？
 
   <details>
-    <summary>Answer</summary>
+    <summary>答案</summary>
 
-    It should be the initial state of the example universe:
+    它应该是例子宇宙的初始状态。
 
     <img src='../images/game-of-life/initial-universe.png' alt='Initial Universe' width=80 />
 
-    This pattern is *periodic*: it returns to the initial state after every two
-    ticks.
+    这种模式是*周期性的*：它在每两个ticks之后返回到初始状态。
 
   </details>
 
-* Can you find an initial universe that is stable? That is, a universe in which
-  every generation is always the same.
+* 你能找到一个稳定的初始宇宙吗？就是说，一个每一代都是一样的宇宙。
 
   <details>
-    <summary>Answer</summary>
+    <summary>答案</summary>
 
-    There are an infinite number of stable universes! The trivially stable
-    universe is the empty universe. A two-by-two square of live cells is also a
-    stable universe.
+    有无限多的稳定的宇宙! 琐碎稳定的宇宙是空宇宙。一个由活细胞组成的2乘2的正方形也是一个稳定的宇宙。
 
   </details>
