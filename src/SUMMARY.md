@@ -1,6 +1,6 @@
 # Summary
 
-- [Introduction](./introduction.md)
+- [简介](./introduction.md)
 - [Why Rust and WebAssembly?](./why-rust-and-webassembly.md)
 - [Background And Concepts](./background-and-concepts.md)
   - [What is WebAssembly?](./what-is-webassembly.md)
