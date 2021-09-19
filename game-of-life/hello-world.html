@@ -1,40 +1,36 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Hello, World! - Rust and WebAssembly</title>
+        <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
         <link rel="stylesheet" href="../css/print.css" media="print">
-
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
-
+        <link rel="stylesheet" href="../fonts/fonts.css">
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
         <link rel="stylesheet" href="../tomorrow-night.css">
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
-
-        
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "../";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -56,10 +52,13 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -75,95 +74,48 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> Why Rust and WebAssembly?</a></li><li><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> Background And Concepts</a></li><li><ol class="section"><li><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> What is WebAssembly?</a></li><li class="spacer"></li></ol></li><li><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> Tutorial</a></li><li><ol class="section"><li><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> Setup</a></li><li><a href="../game-of-life/hello-world.html" class="active"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> Rules</a></li><li><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> Implementing Life</a></li><li><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> Testing Life</a></li><li><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> Debugging</a></li><li><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> Adding Interactivity</a></li><li><a href="../game-of-life/time-profiling.html"><strong aria-hidden="true">4.8.</strong> Time Profiling</a></li><li><a href="../game-of-life/code-size.html"><strong aria-hidden="true">4.9.</strong> Shrinking .wasm Size</a></li><li><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> Publishing to npm</a></li><li class="spacer"></li></ol></li><li><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> Why Rust and WebAssembly?</a></li><li class="chapter-item expanded "><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> Background And Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> What is WebAssembly?</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> Tutorial</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="../game-of-life/hello-world.html" class="active"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> Rules</a></li><li class="chapter-item expanded "><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> Implementing Life</a></li><li class="chapter-item expanded "><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> Testing Life</a></li><li class="chapter-item expanded "><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> Adding Interactivity</a></li><li class="chapter-item expanded "><a href="../game-of-life/time-profiling.html"><strong aria-hidden="true">4.8.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../game-of-life/code-size.html"><strong aria-hidden="true">4.9.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> Publishing to npm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li class="chapter-item expanded "><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li class="chapter-item expanded "><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li class="chapter-item expanded "><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li class="chapter-item expanded "><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <style>
-  header.warning {
-    background-color: rgb(242, 222, 222);
-    border-bottom-color: rgb(238, 211, 215);
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-bottom-style: solid;
-    border-bottom-width: 0.666667px;
-    border-image-outset: 0 0 0 0;
-    border-image-repeat: stretch stretch;
-    border-image-slice: 100% 100% 100% 100%;
-    border-image-source: none;
-    border-image-width: 1 1 1 1;
-    border-left-color: rgb(238, 211, 215);
-    border-left-style: solid;
-    border-left-width: 0.666667px;
-    border-right-color: rgb(238, 211, 215);
-    border-right-style: solid;
-    border-right-width: 0.666667px;
-    border-top-color: rgb(238, 211, 215);
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-top-style: solid;
-    border-top-width: 0.666667px;
-    color: rgb(185, 74, 72);
-    margin-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 30px;
-    padding-bottom: 8px;
-    padding-left: 14px;
-    padding-right: 35px;
-    padding-top: 8px;
-    text-align: center;
-  }
-</style>
-<header class='warning'>
-  This is <strong>unpublished</strong> documentation of
-  working with Rust and WebAssembly, the published documentation is available
-  <a href="https://rustwasm.github.io/docs/book/">
-    on the main Rust and WebAssembly documentation site
-  </a>. Features documented here may not be available in released versions of
-  tooling for Rust and WebAssembly.
-</header>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                    <h1 class="menu-title">Rust and WebAssembly</h1>
 
-                        <h1 class="menu-title">Rust and WebAssembly</h1> 
-
-                        <div class="right-buttons">
-                            <a href="../print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -171,8 +123,6 @@
                         </ul>
                     </div>
                 </div>
-                
-
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -184,11 +134,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#hello-world" id="hello-world"><h1>Hello, World!</h1></a>
+                        <h1 id="hello-world"><a class="header" href="#hello-world">Hello, World!</a></h1>
 <p>This section will show you how to build and run your first Rust and WebAssembly
 program: a Web page that alerts &quot;Hello, World!&quot;</p>
 <p>Make sure you have followed the <a href="setup.html">setup instructions</a> before beginning.</p>
-<a class="header" href="#clone-the-project-template" id="clone-the-project-template"><h2>Clone the Project Template</h2></a>
+<h2 id="clone-the-project-template"><a class="header" href="#clone-the-project-template">Clone the Project Template</a></h2>
 <p>The project template comes pre-configured with sane defaults, so you can quickly
 build, integrate, and package your code for the Web.</p>
 <p>Clone the project template with this command:</p>
@@ -198,7 +148,7 @@ build, integrate, and package your code for the Web.</p>
 <strong>&quot;wasm-game-of-life&quot;</strong>.</p>
 <pre><code class="language-text">wasm-game-of-life
 </code></pre>
-<a class="header" href="#whats-inside" id="whats-inside"><h2>What's Inside</h2></a>
+<h2 id="whats-inside"><a class="header" href="#whats-inside">What's Inside</a></h2>
 <p>Enter the new <code>wasm-game-of-life</code> project</p>
 <pre><code>cd wasm-game-of-life
 </code></pre>
@@ -213,36 +163,28 @@ build, integrate, and package your code for the Web.</p>
     └── utils.rs
 </code></pre>
 <p>Let's take a look at a couple of these files in detail.</p>
-<a class="header" href="#wasm-game-of-lifecargotoml" id="wasm-game-of-lifecargotoml"><h3><code>wasm-game-of-life/Cargo.toml</code></h3></a>
+<h3 id="wasm-game-of-lifecargotoml"><a class="header" href="#wasm-game-of-lifecargotoml"><code>wasm-game-of-life/Cargo.toml</code></a></h3>
 <p>The <code>Cargo.toml</code> file specifies dependencies and metadata for <code>cargo</code>, Rust's
 package manager and build tool. This one comes pre-configured with a
 <code>wasm-bindgen</code> dependency, a few optional dependencies we will dig into later,
 and the <code>crate-type</code> properly initialized for generating <code>.wasm</code> libraries.</p>
-<a class="header" href="#wasm-game-of-lifesrclibrs" id="wasm-game-of-lifesrclibrs"><h3><code>wasm-game-of-life/src/lib.rs</code></h3></a>
+<h3 id="wasm-game-of-lifesrclibrs"><a class="header" href="#wasm-game-of-lifesrclibrs"><code>wasm-game-of-life/src/lib.rs</code></a></h3>
 <p>The <code>src/lib.rs</code> file is the root of the Rust crate that we are compiling to
 WebAssembly. It uses <code>wasm-bindgen</code> to interface with JavaScript. It imports the
 <code>window.alert</code> JavaScript function, and exports the <code>greet</code> Rust function, which
 alerts a greeting message.</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-extern crate cfg_if;
-extern crate wasm_bindgen;
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod utils;
 
-mod utils;
-
-use cfg_if::cfg_if;
 use wasm_bindgen::prelude::*;
 
-cfg_if! {
-    // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-    // allocator.
-    if #[cfg(feature = &quot;wee_alloc&quot;)] {
-        extern crate wee_alloc;
-        #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-    }
-}
+// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
+// allocator.
+#[cfg(feature = &quot;wee_alloc&quot;)]
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
 extern {
@@ -253,14 +195,14 @@ extern {
 pub fn greet() {
     alert(&quot;Hello, wasm-game-of-life!&quot;);
 }
-
-#}</code></pre></pre>
-<a class="header" href="#wasm-game-of-lifesrcutilsrs" id="wasm-game-of-lifesrcutilsrs"><h3><code>wasm-game-of-life/src/utils.rs</code></h3></a>
+<span class="boring">}
+</span></code></pre></pre>
+<h3 id="wasm-game-of-lifesrcutilsrs"><a class="header" href="#wasm-game-of-lifesrcutilsrs"><code>wasm-game-of-life/src/utils.rs</code></a></h3>
 <p>The <code>src/utils.rs</code> module provides common utilities to make working with Rust
 compiled to WebAssembly easier. We will take a look at some of these utilities
 in more detail later in the tutorial, such as when we look at <a href="debugging.html">debugging our wasm
 code</a>, but we can ignore this file for now.</p>
-<a class="header" href="#build-the-project" id="build-the-project"><h2>Build the Project</h2></a>
+<h2 id="build-the-project"><a class="header" href="#build-the-project">Build the Project</a></h2>
 <p>We use <code>wasm-pack</code> to orchestrate the following build steps:</p>
 <ul>
 <li>Ensure that we have Rust 1.30 or newer and the <code>wasm32-unknown-unknown</code>
@@ -283,12 +225,12 @@ and it should have these contents:</p>
 </code></pre>
 <p>The <code>README.md</code> file is copied from the main project, but the others are
 completely new.</p>
-<a class="header" href="#wasm-game-of-lifepkgwasm_game_of_life_bgwasm" id="wasm-game-of-lifepkgwasm_game_of_life_bgwasm"><h3><code>wasm-game-of-life/pkg/wasm_game_of_life_bg.wasm</code></h3></a>
+<h3 id="wasm-game-of-lifepkgwasm_game_of_life_bgwasm"><a class="header" href="#wasm-game-of-lifepkgwasm_game_of_life_bgwasm"><code>wasm-game-of-life/pkg/wasm_game_of_life_bg.wasm</code></a></h3>
 <p>The <code>.wasm</code> file is the WebAssembly binary that is generated by the Rust
 compiler from our Rust sources. It contains the compiled-to-wasm versions of all
 of our Rust functions and data. For example, it has an exported &quot;greet&quot;
 function.</p>
-<a class="header" href="#wasm-game-of-lifepkgwasm_game_of_lifejs" id="wasm-game-of-lifepkgwasm_game_of_lifejs"><h3><code>wasm-game-of-life/pkg/wasm_game_of_life.js</code></h3></a>
+<h3 id="wasm-game-of-lifepkgwasm_game_of_lifejs"><a class="header" href="#wasm-game-of-lifepkgwasm_game_of_lifejs"><code>wasm-game-of-life/pkg/wasm_game_of_life.js</code></a></h3>
 <p>The <code>.js</code> file is generated by <code>wasm-bindgen</code> and contains JavaScript glue for
 importing DOM and JavaScript functions into Rust and exposing a nice API to the
 WebAssembly functions to JavaScript. For example, there is a JavaScript <code>greet</code>
@@ -304,14 +246,14 @@ export function greet() {
     return wasm.greet();
 }
 </code></pre>
-<a class="header" href="#wasm-game-of-lifepkgwasm_game_of_lifedts" id="wasm-game-of-lifepkgwasm_game_of_lifedts"><h3><code>wasm-game-of-life/pkg/wasm_game_of_life.d.ts</code></h3></a>
+<h3 id="wasm-game-of-lifepkgwasm_game_of_lifedts"><a class="header" href="#wasm-game-of-lifepkgwasm_game_of_lifedts"><code>wasm-game-of-life/pkg/wasm_game_of_life.d.ts</code></a></h3>
 <p>The <code>.d.ts</code> file contains <a href="http://www.typescriptlang.org/">TypeScript</a> type declarations for the JavaScript
 glue. If you are using TypeScript, you can have your calls into WebAssembly
 functions type checked, and your IDE can provide autocompletions and
 suggestions! If you aren't using TypeScript, you can safely ignore this file.</p>
 <pre><code class="language-typescript">export function greet(): void;
 </code></pre>
-<a class="header" href="#wasm-game-of-lifepkgpackagejson" id="wasm-game-of-lifepkgpackagejson"><h3><code>wasm-game-of-life/pkg/package.json</code></h3></a>
+<h3 id="wasm-game-of-lifepkgpackagejson"><a class="header" href="#wasm-game-of-lifepkgpackagejson"><code>wasm-game-of-life/pkg/package.json</code></a></h3>
 <p><a href="https://docs.npmjs.com/files/package.json">The <code>package.json</code> file contains metadata about the generated JavaScript and
 WebAssembly package.</a> This is used by npm and JavaScript bundlers
 to determine dependencies across packages, package names, versions, and a bunch
@@ -334,7 +276,7 @@ publish our package to npm.</p>
   &quot;types&quot;: &quot;wasm_game_of_life.d.ts&quot;
 }
 </code></pre>
-<a class="header" href="#putting-it-into-a-web-page" id="putting-it-into-a-web-page"><h2>Putting it into a Web Page</h2></a>
+<h2 id="putting-it-into-a-web-page"><a class="header" href="#putting-it-into-a-web-page">Putting it into a Web Page</a></h2>
 <p>To take our <code>wasm-game-of-life</code> package and use it in a Web page, we use <a href="https://github.com/rustwasm/create-wasm-app">the
 <code>create-wasm-app</code> JavaScript project template</a>.</p>
 <p>Run this command within the <code>wasm-game-of-life</code> directory:</p>
@@ -352,15 +294,15 @@ publish our package to npm.</p>
 └── webpack.config.js
 </code></pre>
 <p>Once again, let's take a closer look at some of these files.</p>
-<a class="header" href="#wasm-game-of-lifewwwpackagejson" id="wasm-game-of-lifewwwpackagejson"><h3><code>wasm-game-of-life/www/package.json</code></h3></a>
+<h3 id="wasm-game-of-lifewwwpackagejson"><a class="header" href="#wasm-game-of-lifewwwpackagejson"><code>wasm-game-of-life/www/package.json</code></a></h3>
 <p>This <code>package.json</code> comes pre-configured with <code>webpack</code> and <code>webpack-dev-server</code>
 dependencies, as well as a dependency on <code>hello-wasm-pack</code>, which is a version
 of the initial <code>wasm-pack-template</code> package that has been published to npm.</p>
-<a class="header" href="#wasm-game-of-lifewwwwebpackconfigjs" id="wasm-game-of-lifewwwwebpackconfigjs"><h3><code>wasm-game-of-life/www/webpack.config.js</code></h3></a>
+<h3 id="wasm-game-of-lifewwwwebpackconfigjs"><a class="header" href="#wasm-game-of-lifewwwwebpackconfigjs"><code>wasm-game-of-life/www/webpack.config.js</code></a></h3>
 <p>This file configures webpack and its local development server. It comes
 pre-configured, and you shouldn't have to tweak this at all to get webpack and
 its local development server working.</p>
-<a class="header" href="#wasm-game-of-lifewwwindexhtml" id="wasm-game-of-lifewwwindexhtml"><h3><code>wasm-game-of-life/www/index.html</code></h3></a>
+<h3 id="wasm-game-of-lifewwwindexhtml"><a class="header" href="#wasm-game-of-lifewwwindexhtml"><code>wasm-game-of-life/www/index.html</code></a></h3>
 <p>This is the root HTML file for the Web page. It doesn't do much other than
 load <code>bootstrap.js</code>, which is a very thin wrapper around <code>index.js</code>.</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
@@ -374,7 +316,7 @@ load <code>bootstrap.js</code>, which is a very thin wrapper around <code>index.
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<a class="header" href="#wasm-game-of-lifewwwindexjs" id="wasm-game-of-lifewwwindexjs"><h3><code>wasm-game-of-life/www/index.js</code></h3></a>
+<h3 id="wasm-game-of-lifewwwindexjs"><a class="header" href="#wasm-game-of-lifewwwindexjs"><code>wasm-game-of-life/www/index.js</code></a></h3>
 <p>The <code>index.js</code> is the main entry point for our Web page's JavaScript. It imports
 the <code>hello-wasm-pack</code> npm package, which contains the default
 <code>wasm-pack-template</code>'s compiled WebAssembly and JavaScript glue, then it calls
@@ -383,7 +325,7 @@ the <code>hello-wasm-pack</code> npm package, which contains the default
 
 wasm.greet();
 </code></pre>
-<a class="header" href="#install-the-dependencies" id="install-the-dependencies"><h3>Install the dependencies</h3></a>
+<h3 id="install-the-dependencies"><a class="header" href="#install-the-dependencies">Install the dependencies</a></h3>
 <p>First, ensure that the local development server and its dependencies are
 installed by running <code>npm install</code> within the <code>wasm-game-of-life/www</code>
 subdirectory:</p>
@@ -398,17 +340,19 @@ here. Parcel and Rollup should also support importing WebAssembly as
 ECMAScript modules. You can also use Rust and WebAssembly <a href="https://rustwasm.github.io/docs/wasm-bindgen/examples/without-a-bundler.html">without a
 bundler</a> if you prefer!</p>
 </blockquote>
-<a class="header" href="#using-our-local-wasm-game-of-life-package-in-www" id="using-our-local-wasm-game-of-life-package-in-www"><h3>Using our Local <code>wasm-game-of-life</code> Package in <code>www</code></h3></a>
+<h3 id="using-our-local-wasm-game-of-life-package-in-www"><a class="header" href="#using-our-local-wasm-game-of-life-package-in-www">Using our Local <code>wasm-game-of-life</code> Package in <code>www</code></a></h3>
 <p>Rather than use the <code>hello-wasm-pack</code> package from npm, we want to use our local
 <code>wasm-game-of-life</code> package instead. This will allow us to incrementally develop
 our Game of Life program.</p>
-<p>Open up <code>wasm-game-of-life/www/package.json</code> and edit the <code>&quot;dependencies&quot;</code> to
-include a <code>&quot;wasm-game-of-life&quot;: &quot;file:../pkg&quot;</code> entry:</p>
+<p>Open up <code>wasm-game-of-life/www/package.json</code> and next to <code>&quot;devDependencies&quot;</code>, add the <code>&quot;dependencies&quot;</code> field,
+including a <code>&quot;wasm-game-of-life&quot;: &quot;file:../pkg&quot;</code> entry:</p>
 <pre><code class="language-js">{
   // ...
-  &quot;dependencies&quot;: {
-    &quot;wasm-game-of-life&quot;: &quot;file:../pkg&quot;, // Add this line!
-    // ...
+  &quot;dependencies&quot;: {                     // Add this three lines block!
+    &quot;wasm-game-of-life&quot;: &quot;file:../pkg&quot;
+  },
+  &quot;devDependencies&quot;: {
+    //...
   }
 }
 </code></pre>
@@ -422,7 +366,7 @@ wasm.greet();
 <pre><code class="language-text">npm install
 </code></pre>
 <p>Our Web page is now ready to be served locally!</p>
-<a class="header" href="#serving-locally" id="serving-locally"><h2>Serving Locally</h2></a>
+<h2 id="serving-locally"><a class="header" href="#serving-locally">Serving Locally</a></h2>
 <p>Next, open a new terminal for the development server. Running the server in a
 new terminal lets us leave it running in the background, and doesn't block us
 from running other commands in the meantime. In the new terminal, run this
@@ -434,7 +378,7 @@ and you should be greeted with an alert message:</p>
 <p><a href="../images/game-of-life/hello-world.png"><img src="../images/game-of-life/hello-world.png" alt="Screenshot of the &quot;Hello, wasm-game-of-life!&quot; Web page alert" /></a></p>
 <p>Anytime you make changes and want them reflected on
 <a href="http://localhost:8080/">http://localhost:8080/</a>, just re-run the <code>wasm-pack build</code> command within the <code>wasm-game-of-life</code> directory.</p>
-<a class="header" href="#exercises" id="exercises"><h2>Exercises</h2></a>
+<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
 <ul>
 <li>
 <p>Modify the <code>greet</code> function in <code>wasm-game-of-life/src/lib.rs</code> to take a <code>name: &amp;str</code> parameter that customizes the alerted message, and pass your name to the
@@ -442,21 +386,22 @@ and you should be greeted with an alert message:</p>
 <code>.wasm</code> binary with <code>wasm-pack build</code>, then refresh
 <a href="http://localhost:8080/">http://localhost:8080/</a> in your Web browser and you
 should see a customized greeting!</p>
-<p><details>
-<summary>Answer</summary></p>
+<details>
+  <summary>Answer</summary>
 <p>New version of the <code>greet</code> function in <code>wasm-game-of-life/src/lib.rs</code>:</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-#[wasm_bindgen]
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[wasm_bindgen]
 pub fn greet(name: &amp;str) {
     alert(&amp;format!(&quot;Hello, {}!&quot;, name));
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>New invocation of <code>greet</code> in <code>wasm-game-of-life/www/index.js</code>:</p>
 <pre><code class="language-js">wasm.greet(&quot;Your Name&quot;);
 </code></pre>
-<p></details></p>
+</details>
 </li>
 </ul>
 
@@ -464,59 +409,52 @@ pub fn greet(name: &amp;str) {
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../game-of-life/setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
-
-                        
                             <a rel="next" href="../game-of-life/rules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
-
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
-                    <a href="../game-of-life/setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../game-of-life/setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
-
-                
-                    <a href="../game-of-life/rules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../game-of-life/rules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
 
-        
-
-        
-
-        
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
-
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
-
-        
-
     </body>
 </html>
