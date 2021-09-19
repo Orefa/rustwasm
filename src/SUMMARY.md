@@ -9,7 +9,7 @@
     - [设置](./game-of-life/setup.md)
     - [Hello, World!](./game-of-life/hello-world.md)
     - [规则](./game-of-life/rules.md)
-    - [Implementing Life](./game-of-life/implementing.md)
+    - [实现康威的生命游戏 ](./game-of-life/implementing.md)
     - [Testing Life](./game-of-life/testing.md)
     - [Debugging](./game-of-life/debugging.md)
     - [Adding Interactivity](./game-of-life/interactivity.md)

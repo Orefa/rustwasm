@@ -1,127 +1,63 @@
-# Implementing Conway's Game of Life
+# 实现康威的生命游戏
 
-## Design
+## 设计
 
-Before we dive in, we have some design choices to consider.
+在我们深入研究之前，我们需要考虑一些设计选择。 
 
-### Infinite Universe
+### 无限宇宙 
 
-The Game of Life is played in an infinite universe, but we do not have infinite
-memory and compute power. Working around this rather annoying limitation usually
-comes in one of three flavors:
+生命游戏是在一个无限的宇宙中进行的，但我们没有无限的内存和计算能力。 解决这个相当烦人的限制通常有以下三种方式之一： 
 
-1. Keep track of which subset of the universe has interesting things happening,
-   and expand this region as needed. In the worst case, this expansion is
-   unbounded and the implementation will get slower and slower and eventually
-   run out of memory.
+1. 跟踪宇宙的哪个子集发生了有趣的事情，并根据需要扩展该区域。 在最坏的情况下，这种扩展是无界的，实现会越来越慢，最终会耗尽内存。 
 
-2. Create a fixed-size universe, where cells on the edges have fewer neighbors
-   than cells in the middle. The downside with this approach is that infinite
-   patterns, like gliders, that reach the end of the universe are snuffed out.
+2. 创建一个固定大小的宇宙，其中边缘的单元格比中间的单元格具有更少的邻居。 这种方法的缺点是，像滑翔机一样到达宇宙尽头的无限模式被扼杀了。 
 
-3. Create a fixed-size, periodic universe, where cells on the edges have
-   neighbors that wrap around to the other side of the universe. Because
-   neighbors wrap around the edges of the universe, gliders can keep running
-   forever.
+3. 创建一个固定大小的周期性宇宙，其中边缘的细胞有环绕宇宙另一侧的邻居。 因为邻居环绕着宇宙的边缘，所以滑翔机可以永远运行。 
 
-We will implement the third option.
+我们将实施第三个选项。
 
-### Interfacing Rust and JavaScript
+### Rust 和 JavaScript 的接口 
 
-> ⚡ This is one of the most important concepts to understand and take away from
-> this tutorial!
+> ⚡ 这是本教程中需要理解和掌握的最重要的概念之一！
 
-JavaScript's garbage-collected heap — where `Object`s, `Array`s, and DOM nodes
-are allocated — is distinct from WebAssembly's linear memory space, where our
-Rust values live. WebAssembly currently has no direct access to the
-garbage-collected heap (as of April 2018, this is expected to change with the
-["Interface Types" proposal][interface-types]). JavaScript, on the other hand, can
-read and write to the WebAssembly linear memory space, but only as an
-[`ArrayBuffer`][array-buf] of scalar values (`u8`, `i32`, `f64`,
-etc...). WebAssembly functions also take and return scalar values. These are the
-building blocks from which all WebAssembly and JavaScript communication is
-constituted.
+JavaScript 的垃圾收集堆——其中分配了“对象”、“数组”和 DOM 节点——与 WebAssembly 的线性内存空间不同，我们的 Rust 值存在于其中。 WebAssembly 目前无法直接访问垃圾收集堆（截至 2018 年 4 月，这预计会随着 [“接口类型”提案][interface-types] 的出现而改变）。 另一方面，JavaScript可以读写WebAssembly的线性内存空间，但只能作为标量值的[`ArrayBuffer`][array-buf]（`u8`，`i32`，`f64`，等等）。 WebAssembly 函数也接受和返回标量值。 这些是构成所有 WebAssembly 和 JavaScript 通信的构建块。 
 
 [interface-types]: https://github.com/WebAssembly/interface-types/blob/master/proposals/interface-types/Explainer.md
 [array-buf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
 
-`wasm_bindgen` defines a common understanding of how to work with compound
-structures across this boundary. It involves boxing Rust structures, and
-wrapping the pointer in a JavaScript class for usability, or indexing into a
-table of JavaScript objects from Rust. `wasm_bindgen` is very convenient, but it
-does not remove the need to consider our data representation, and what values
-and structures are passed across this boundary. Instead, think of it as a tool
-for implementing the interface design you choose.
+`wasm_bindgen` 定义了如何跨这个边界处理复合结构的共同理解。 它涉及装箱 Rust 结构，并将指针包装在 JavaScript 类中以提高可用性，或者从 Rust 索引到 JavaScript 对象表。 `wasm_bindgen` 非常方便，但它并没有消除考虑我们的数据表示的需要，以及跨越这个边界传递的值和结构。 相反，将其视为实现您选择的界面设计的工具。
 
-When designing an interface between WebAssembly and JavaScript, we want to
-optimize for the following properties:
+在设计 WebAssembly 和 JavaScript 之间的接口时，我们希望针对以下属性进行优化： 
 
-1. **Minimizing copying into and out of the WebAssembly linear memory.**
-   Unnecessary copies impose unnecessary overhead.
+1. **最大限度地减少进出 WebAssembly 线性内存的复制。** 不必要的副本会带来不必要的开销。 
 
-2. **Minimizing serializing and deserializing.** Similar to copies, serializing
-   and deserializing also imposes overhead, and often imposes copying as
-   well. If we can pass opaque handles to a data structure — instead of
-   serializing it on one side, copying it into some known location in the
-   WebAssembly linear memory, and deserializing on the other side — we can often
-   reduce a lot of overhead. `wasm_bindgen` helps us define and work with opaque
-   handles to JavaScript `Object`s or boxed Rust structures.
+2. **最小化序列化和反序列化。** 与副本类似，序列化和反序列化也会产生开销，并且通常也会产生复制。 如果我们可以将不透明的句柄传递给数据结构——而不是在一侧序列化它，将它复制到 WebAssembly 线性内存中的某个已知位置，然后在另一侧反序列化——我们通常可以减少很多开销。 `wasm_bindgen` 帮助我们定义和使用 JavaScript 对象或盒装 Rust 结构的不透明句柄。 
 
-As a general rule of thumb, a good JavaScript↔WebAssembly interface design is
-often one where large, long-lived data structures are implemented as Rust types
-that live in the WebAssembly linear memory, and are exposed to JavaScript as
-opaque handles. JavaScript calls exported WebAssembly functions that take these
-opaque handles, transform their data, perform heavy computations, query the
-data, and ultimately return a small, copy-able result. By only returning the
-small result of the computation, we avoid copying and/or serializing everything
-back and forth between the JavaScript garbage-collected heap and the WebAssembly
-linear memory.
+### 在我们的生活游戏中连接 Rust 和 JavaScript 
 
-### Interfacing Rust and JavaScript in our Game of Life
+让我们首先列举一些要避免的危险。 我们不想在每个滴答声中将整个宇宙复制到 WebAssembly 线性内存中。 我们不想为宇宙中的每个单元格分配对象，也不想强加跨界调用来读取和写入每个单元格。
 
-Let's start by enumerating some hazards to avoid. We don't want to copy the
-whole universe into and out of the WebAssembly linear memory on every tick. We
-do not want to allocate objects for every cell in the universe, nor do we want
-to impose a cross-boundary call to read and write each cell.
+这让我们何去何从？ 我们可以将宇宙表示为一个平面数组，它存在于 WebAssembly 线性内存中，每个单元格都有一个字节。 `0` 是死细胞，`1` 是活细胞。
 
-Where does this leave us? We can represent the universe as a flat array that
-lives in the WebAssembly linear memory, and has a byte for each cell. `0` is a
-dead cell and `1` is a live cell.
-
-Here is what a 4 by 4 universe looks like in memory:
+以下是 4 x 4 宇宙在内存中的样子： 
 
 ![Screenshot of a 4 by 4 universe](../images/game-of-life/universe.png)
 
-To find the array index of the cell at a given row and column in the universe,
-we can use this formula:
+为了找到宇宙中某一行和某一列的单元格的阵列索引，我们可以使用这个公式：
 
 ```text
 index(row, column, universe) = row * width(universe) + column
 ```
 
-We have several ways of exposing the universe's cells to JavaScript. To begin,
-we will implement [`std::fmt::Display`][`Display`] for `Universe`, which we can
-use to generate a Rust `String` of the cells rendered as text characters. This
-Rust String is then copied from the WebAssembly linear memory into a JavaScript
-String in the JavaScript's garbage-collected heap, and is then displayed by
-setting HTML `textContent`. Later in the chapter, we'll evolve this
-implementation to avoid copying the universe's cells between heaps and to render
-to `<canvas>`.
+我们有几种方法可以将宇宙的单元格暴露给 JavaScript。首先，我们将为 "宇宙 "实现[`std::fmt::Display`][`Display`]，我们可以用它来生成一个渲染为文本字符的单元格的Rust`String`。然后这个Rust字符串从WebAssembly的线性内存中复制到JavaScript的垃圾收集堆中的一个JavaScript字符串，然后通过设置HTML`textContent`来显示。在本章的后面，我们将发展这个实现，以避免在堆之间复制宇宙的单元，并渲染到`<canvas>`。
 
-*Another viable design alternative would be for Rust to return a list of every
-cell that changed states after each tick, instead of exposing the whole universe
-to JavaScript. This way, JavaScript wouldn't need to iterate over the whole
-universe when rendering, only the relevant subset. The trade off is that this
-delta-based design is slightly more difficult to implement.*
+*另一个可行的设计方案是让Rust在每次打勾后返回一个改变状态的单元格的列表，而不是将整个宇宙暴露给JavaScript。这样一来，JavaScript就不需要在渲染时遍历整个宇宙，只需要遍历相关的子集。这样做的好处是，这种基于delta的设计在实现上稍显困难。*
 
-## Rust Implementation
+## Rust 实现
 
-In the last chapter, we cloned an initial project template. We will modify that
-project template now.
+在上一章中，我们克隆了一个初始项目模板。 我们现在将修改该项目模板。
 
-Let's begin by removing the `alert` import and `greet` function from
-`wasm-game-of-life/src/lib.rs`, and replacing them with a type definition for
-cells:
+让我们首先从 `wasm-game-of-life/src/lib.rs` 中删除 `alert` 导入和 `greet` 函数，并将它们替换为单元格的类型定义： 
 
 ```rust
 #[wasm_bindgen]
@@ -133,13 +69,9 @@ pub enum Cell {
 }
 ```
 
-It is important that we have `#[repr(u8)]`, so that each cell is represented as
-a single byte. It is also important that the `Dead` variant is `0` and that the
-`Alive` variant is `1`, so that we can easily count a cell's live neighbors with
-addition.
+重要的是我们有`#[repr(u8)]`，这样每个单元格都表示为一个字节。 同样重要的是，`Dead` 变体为 `0`，`Alive` 变体为 `1`，以便我们可以轻松地通过加法计算单元格的活邻居。
 
-Next, let's define the universe. The universe has a width and a height, and a
-vector of cells of length `width * height`.
+接下来，让我们定义宇宙。 宇宙有宽度和高度，以及长度为 `width * height` 的单元向量。 
 
 ```rust
 #[wasm_bindgen]
@@ -150,8 +82,7 @@ pub struct Universe {
 }
 ```
 
-To access the cell at a given row and column, we translate the row and column
-into an index into the cells vector, as described earlier:
+为了访问给定行和列的单元格，我们将行和列转换为单元格向量的索引，如前所述：
 
 ```rust
 impl Universe {
@@ -163,9 +94,7 @@ impl Universe {
 }
 ```
 
-In order to calculate the next state of a cell, we need to get a count of how
-many of its neighbors are alive. Let's write a `live_neighbor_count` method to
-do just that!
+为了计算一个细胞的下一个状态，我们需要计算它的邻居有多少是活着的。 让我们编写一个 `live_neighbor_count` 方法来做到这一点！ 
 
 ```rust
 impl Universe {
@@ -190,17 +119,9 @@ impl Universe {
 }
 ```
 
-The `live_neighbor_count` method uses deltas and modulo to avoid special casing
-the edges of the universe with `if`s. When applying a delta of `-1`, we *add*
-`self.height - 1` and let the modulo do its thing, rather than attempting to
-subtract `1`. `row` and `column` can be `0`, and if we attempted to subtract `1`
-from them, there would be an unsigned integer underflow.
+`live_neighbor_count` 方法使用 deltas 和 modulo 来避免使用 `if` 对宇宙边缘进行特殊外壳。 当应用 `-1` 的增量时，我们*添加* `self.height - 1` 并让模数做它的事情，而不是尝试减去 `1`。 `row` 和 `column` 可以是 `0`，如果我们试图从它们中减去 `1`，就会出现一个无符号整数下溢。
 
-Now we have everything we need to compute the next generation from the current
-one! Each of the Game's rules follows a straightforward translation into a
-condition on a `match` expression. Additionally, because we want JavaScript to
-control when ticks happen, we will put this method inside a `#[wasm_bindgen]`
-block, so that it gets exposed to JavaScript.
+现在我们拥有了从当前计算下一代所需的一切！ 游戏的每条规则都直接转换为“匹配”表达式的条件。 此外，因为我们希望 JavaScript 控制滴答发生的时间，我们将把这个方法放在一个 `#[wasm_bindgen]` 块中，以便它暴露给 JavaScript。 
 
 ```rust
 /// Public methods, exported to JavaScript.
