@@ -5,8 +5,8 @@
 - [背景和概念](./background-and-concepts.md)
   - [什么是WebAssembly?](./what-is-webassembly.md)
 --------------------------------------------------------------------------------
-- [Tutorial](./game-of-life/introduction.md)
-    - [Setup](./game-of-life/setup.md)
+- [教程 ](./game-of-life/introduction.md)
+    - [设置](./game-of-life/setup.md)
     - [Hello, World!](./game-of-life/hello-world.md)
     - [Rules](./game-of-life/rules.md)
     - [Implementing Life](./game-of-life/implementing.md)

@@ -25,7 +25,7 @@
 这本书是开放源代码的! 发现一个错别字？我们是否忽略了什么？
 
 - 中文版本: [**Send us a pull request!**][repozh]
-- 英文版本：[**Send us a pull request!**][repo]
+- 英文版本: [**Send us a pull request!**][repo]
 
 [Rust]: https://www.rust-lang.org
 [WebAssembly]: https://webassembly.org/

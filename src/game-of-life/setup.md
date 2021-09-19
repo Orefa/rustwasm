@@ -1,47 +1,37 @@
-# Setup
+# 设置
 
-This section describes how to set up the toolchain for compiling Rust programs
-to WebAssembly and integrate them into JavaScript.
+本节描述了如何设置工具链，将 Rust 程序编译为 WebAssembly，并将其集成到 JavaScript 中。到 WebAssembly，并将其集成到 JavaScript 中。
 
-## The Rust Toolchain
+## Rust 工具链
 
-You will need the standard Rust toolchain, including `rustup`, `rustc`, and
-`cargo`.
+你将需要标准的 Rust 工具链，包括 `rustup`, `rustc`, 和 `cargo`.
 
-[Follow these instructions to install the Rust toolchain.][rust-install]
+[按照这些说明来安装Rust工具链。][rust-install]
 
-The Rust and WebAssembly experience is riding the Rust release trains to stable!
-That means we don't require any experimental feature flags. However, we do
-require Rust 1.30 or newer.
+Rust 和 WebAssembly 的经验是乘着 Rust 发布的列车到了稳定期! 这意味着我们不需要任何实验性功能标志。然而，我们确实 需要 Rust 1.30 或更新版本。
 
 ## `wasm-pack`
 
-`wasm-pack` is your one-stop shop for building, testing, and publishing
-Rust-generated WebAssembly.
+`wasm-pack` 是您构建、测试和发布 Rust 生成的 WebAssembly 的一站式商店。 
 
 [Get `wasm-pack` here!][wasm-pack-install]
 
 ## `cargo-generate`
 
-[`cargo-generate` helps you get up and running quickly with a new Rust project
-by leveraging a pre-existing git repository as a template.][cargo-generate]
+[`cargo-generate` 通过利用预先存在的 git 存储库作为模板，帮助您快速启动并运行新的 Rust 项目。][cargo-generate]
 
-Install `cargo-generate` with this command:
+使用如下命令安装 `cargo-generate`:
 
 ```
 cargo install cargo-generate
 ```
 
 ## `npm`
+`npm` 是 JavaScript 的包管理器。 我们将使用它来安装和运行 JavaScript 打包器和开发服务器。 在教程结束时，我们将把我们编译的 `.wasm` 发布到 `npm` 仓库。 
 
-`npm` is a package manager for JavaScript. We will use it to install and run a
-JavaScript bundler and development server. At the end of the tutorial, we will
-publish our compiled `.wasm` to the `npm` registry.
+[按照这些说明进行安装 `npm`.][npm-install]
 
-[Follow these instructions to install `npm`.][npm-install]
-
-If you already have `npm` installed, make sure it is up to date with this
-command:
+如果您已经安装了 `npm`，请使用以下命令确保它是最新的： 
 
 ```
 npm install npm@latest -g
