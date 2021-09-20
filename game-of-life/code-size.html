@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Shrinking .wasm Size - Rust and WebAssembly</title>
+        <title>缩小.wasm 大小 - Rust and WebAssembly</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> 为什么是Rust和WebAssembly?</a></li><li class="chapter-item expanded "><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> 背景和概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> 什么是WebAssembly?</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> 教程 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../game-of-life/hello-world.html"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> 规则</a></li><li class="chapter-item expanded "><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> 实现康威的生命游戏 </a></li><li class="chapter-item expanded "><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> Testing Life</a></li><li class="chapter-item expanded "><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> Adding Interactivity</a></li><li class="chapter-item expanded "><a href="../game-of-life/time-profiling.html"><strong aria-hidden="true">4.8.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../game-of-life/code-size.html" class="active"><strong aria-hidden="true">4.9.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> Publishing to npm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li class="chapter-item expanded "><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li class="chapter-item expanded "><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li class="chapter-item expanded "><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li class="chapter-item expanded "><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> 为什么是Rust和WebAssembly?</a></li><li class="chapter-item expanded "><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> 背景和概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> 什么是WebAssembly?</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> 教程 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../game-of-life/hello-world.html"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> 规则</a></li><li class="chapter-item expanded "><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> 实现康威的生命游戏</a></li><li class="chapter-item expanded "><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> 测试康威的生命游戏</a></li><li class="chapter-item expanded "><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> 调试</a></li><li class="chapter-item expanded "><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> 添加交互性</a></li><li class="chapter-item expanded "><a href="../game-of-life/time-profiling.html"><strong aria-hidden="true">4.8.</strong> 时间分析</a></li><li class="chapter-item expanded "><a href="../game-of-life/code-size.html" class="active"><strong aria-hidden="true">4.9.</strong> 缩小.wasm 大小</a></li><li class="chapter-item expanded "><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> 发布到 npm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li class="chapter-item expanded "><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li class="chapter-item expanded "><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li class="chapter-item expanded "><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li class="chapter-item expanded "><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,57 +134,36 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="shrinking-wasm-size"><a class="header" href="#shrinking-wasm-size">Shrinking <code>.wasm</code> Size</a></h1>
-<p>For <code>.wasm</code> binaries that we ship to clients over the network, such as our Game
-of Life Web application, we want to keep an eye on code size. The smaller our
-<code>.wasm</code> is, the faster our page loads get, and the happier our users are.</p>
-<h2 id="how-small-can-we-get-our-game-of-life-wasm-binary-via-build-configuration"><a class="header" href="#how-small-can-we-get-our-game-of-life-wasm-binary-via-build-configuration">How small can we get our Game of Life <code>.wasm</code> binary via build configuration?</a></h2>
-<p><a href="../reference/code-size.html#optimizing-builds-for-code-size">Take a moment to review the build configuration options we can tweak to get
-smaller <code>.wasm</code> code
-sizes.</a></p>
-<p>With the default release build configuration (without debug symbols), our
-WebAssembly binary is 29,410 bytes:</p>
+                        <h1 id="缩小wasm-大小"><a class="header" href="#缩小wasm-大小">缩小<code>.wasm</code> 大小</a></h1>
+<p>对于我们通过网络发送给客户端的 <code>.wasm</code> 二进制文件，例如我们的 Game of Life Web 应用程序，我们希望关注代码大小。 我们的 <code>.wasm</code> 越小，我们的页面加载速度就越快，我们的用户就越开心。</p>
+<h2 id="我们可以通过构建配置获得我们的-game-of-life-wasm-二进制文件有多小"><a class="header" href="#我们可以通过构建配置获得我们的-game-of-life-wasm-二进制文件有多小">我们可以通过构建配置获得我们的 Game of Life <code>.wasm</code> 二进制文件有多小？</a></h2>
+<p><a href="../reference/code-size.html#%E9%92%88%E5%AF%B9%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%B0%8F%E4%BC%98%E5%8C%96%E6%9E%84%E5%BB%BA">花点时间查看我们可以调整的构建配置选项以获得更小的 <code>.wasm</code> 代码大小。</a></p>
+<p>使用默认的发布构建配置（没有调试符号），我们的 WebAssembly 二进制文件是 29,410 字节： </p>
 <pre><code>$ wc -c pkg/wasm_game_of_life_bg.wasm
 29410 pkg/wasm_game_of_life_bg.wasm
 </code></pre>
-<p>After enabling LTO, setting <code>opt-level = &quot;z&quot;</code>, and running <code>wasm-opt -Oz</code>, the
-resulting <code>.wasm</code> binary shrinks to only 17,317 bytes:</p>
+<p>在启用 LTO、设置 <code>opt-level = &quot;z&quot;</code> 并运行 <code>wasm-opt -Oz</code> 后，生成的 <code>.wasm</code> 二进制文件缩小到只有 17,317 个字节： </p>
 <pre><code>$ wc -c pkg/wasm_game_of_life_bg.wasm
 17317 pkg/wasm_game_of_life_bg.wasm
 </code></pre>
-<p>And if we compress it with <code>gzip</code> (which nearly every HTTP server does) we get
-down to a measly 9,045 bytes!</p>
+<p>如果我们用 <code>gzip</code> 压缩它（几乎每个 HTTP 服务器都会这样做），我们会减少到 9,045 字节！ </p>
 <pre><code>$ gzip -9 &lt; pkg/wasm_game_of_life_bg.wasm | wc -c
 9045
 </code></pre>
-<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<h2 id="练习"><a class="header" href="#练习">练习</a></h2>
 <ul>
 <li>
-<p>Use <a href="../reference/code-size.html#use-the-wasm-snip-tool">the <code>wasm-snip</code> tool</a>
-to remove the panicking infrastructure functions from our Game of Life's
-<code>.wasm</code> binary. How many bytes does it save?</p>
+<p>使用 <a href="../reference/code-size.html#%E4%BD%BF%E7%94%A8-wasm-snip-%E5%B7%A5%E5%85%B7"><code>wasm-snip</code> 工具</a> 从我们的生命游戏的 <code>.wasm</code> 二进制文件中删除恐慌的基础设施功能。 它节省了多少字节？</p>
 </li>
 <li>
-<p>Build our Game of Life crate with and without <a href="https://github.com/rustwasm/wee_alloc"><code>wee_alloc</code> as its global
-allocator</a>. The
-<code>rustwasm/wasm-pack-template</code> template that we cloned to start this project
-has a &quot;wee_alloc&quot; cargo feature that you can enable by adding it to the
-<code>default</code> key in the <code>[features]</code> section of <code>wasm-game-of-life/Cargo.toml</code>:</p>
+<p>使用和不使用 <a href="https://github.com/rustwasm/wee_alloc"><code>wee_alloc</code> 作为其全局分配器</a> 构建我们的游戏生命箱。 我们克隆来启动这个项目的 <code>rustwasm/wasm-pack-template</code> 模板有一个“wee_alloc”货物特性，您可以通过将其添加到 <code>wasm-game-of-life/Cargo.toml</code> 的 <code>[features]</code> 部分中的 <code>default</code> 键来启用：</p>
 <pre><code class="language-toml">[features]
 default = [&quot;wee_alloc&quot;]
 </code></pre>
-<p>How much size does using <code>wee_alloc</code> shave off of the <code>.wasm</code>
-binary?</p>
+<p>使用 <code>wee_alloc</code> 可以减少 <code>.wasm</code> 二进制文件的大小吗？ </p>
 </li>
 <li>
-<p>We only ever instantiate a single <code>Universe</code>, so rather than providing a
-constructor, we can export operations that manipulate a single <code>static mut</code>
-global instance. If this global instance also uses the double buffering
-technique discussed in earlier chapters, we can make those buffers also be
-<code>static mut</code> globals. This removes all dynamic allocation from our Game of
-Life implementation, and we can make it a <code>#![no_std]</code> crate that doesn't
-include an allocator. How much size was removed from the <code>.wasm</code> by completely
-removing the allocator dependency?</p>
+<p>我们只实例化一个 <code>Universe</code>，因此我们可以导出操作单个 <code>static mut</code> 全局实例的操作，而不是提供构造函数。 如果这个全局实例也使用了前面章节中讨论过的双缓冲技术，我们可以使这些缓冲区也成为 <code>static mut</code> 全局变量。 这从我们的生命游戏实现中删除了所有动态分配，我们可以使它成为一个不包含分配器的 <code>#![no_std]</code> crate。 通过完全删除分配器依赖，从 <code>.wasm</code> 中删除了多少大小？ </p>
 </li>
 </ul>
 

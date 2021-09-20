@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Time Profiling - Rust and WebAssembly</title>
+        <title>时间分析 - Rust and WebAssembly</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> 为什么是Rust和WebAssembly?</a></li><li class="chapter-item expanded "><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> 背景和概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> 什么是WebAssembly?</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> 教程 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../game-of-life/hello-world.html"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> 规则</a></li><li class="chapter-item expanded "><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> 实现康威的生命游戏 </a></li><li class="chapter-item expanded "><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> Testing Life</a></li><li class="chapter-item expanded "><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> Adding Interactivity</a></li><li class="chapter-item expanded "><a href="../game-of-life/time-profiling.html" class="active"><strong aria-hidden="true">4.8.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../game-of-life/code-size.html"><strong aria-hidden="true">4.9.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> Publishing to npm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li class="chapter-item expanded "><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li class="chapter-item expanded "><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li class="chapter-item expanded "><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li class="chapter-item expanded "><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="chapter-item expanded "><a href="../why-rust-and-webassembly.html"><strong aria-hidden="true">2.</strong> 为什么是Rust和WebAssembly?</a></li><li class="chapter-item expanded "><a href="../background-and-concepts.html"><strong aria-hidden="true">3.</strong> 背景和概念</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../what-is-webassembly.html"><strong aria-hidden="true">3.1.</strong> 什么是WebAssembly?</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../game-of-life/introduction.html"><strong aria-hidden="true">4.</strong> 教程 </a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../game-of-life/setup.html"><strong aria-hidden="true">4.1.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../game-of-life/hello-world.html"><strong aria-hidden="true">4.2.</strong> Hello, World!</a></li><li class="chapter-item expanded "><a href="../game-of-life/rules.html"><strong aria-hidden="true">4.3.</strong> 规则</a></li><li class="chapter-item expanded "><a href="../game-of-life/implementing.html"><strong aria-hidden="true">4.4.</strong> 实现康威的生命游戏</a></li><li class="chapter-item expanded "><a href="../game-of-life/testing.html"><strong aria-hidden="true">4.5.</strong> 测试康威的生命游戏</a></li><li class="chapter-item expanded "><a href="../game-of-life/debugging.html"><strong aria-hidden="true">4.6.</strong> 调试</a></li><li class="chapter-item expanded "><a href="../game-of-life/interactivity.html"><strong aria-hidden="true">4.7.</strong> 添加交互性</a></li><li class="chapter-item expanded "><a href="../game-of-life/time-profiling.html" class="active"><strong aria-hidden="true">4.8.</strong> 时间分析</a></li><li class="chapter-item expanded "><a href="../game-of-life/code-size.html"><strong aria-hidden="true">4.9.</strong> 缩小.wasm 大小</a></li><li class="chapter-item expanded "><a href="../game-of-life/publishing-to-npm.html"><strong aria-hidden="true">4.10.</strong> 发布到 npm</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">5.</strong> Reference</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/crates.html"><strong aria-hidden="true">5.1.</strong> Crates You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/tools.html"><strong aria-hidden="true">5.2.</strong> Tools You Should Know</a></li><li class="chapter-item expanded "><a href="../reference/project-templates.html"><strong aria-hidden="true">5.3.</strong> Project Templates</a></li><li class="chapter-item expanded "><a href="../reference/debugging.html"><strong aria-hidden="true">5.4.</strong> Debugging</a></li><li class="chapter-item expanded "><a href="../reference/time-profiling.html"><strong aria-hidden="true">5.5.</strong> Time Profiling</a></li><li class="chapter-item expanded "><a href="../reference/code-size.html"><strong aria-hidden="true">5.6.</strong> Shrinking .wasm Size</a></li><li class="chapter-item expanded "><a href="../reference/js-ffi.html"><strong aria-hidden="true">5.7.</strong> JavaScript Interoperation</a></li><li class="chapter-item expanded "><a href="../reference/which-crates-work-with-wasm.html"><strong aria-hidden="true">5.8.</strong> Which Crates Will Work Off-the-Shelf with WebAssembly?</a></li><li class="chapter-item expanded "><a href="../reference/add-wasm-support-to-crate.html"><strong aria-hidden="true">5.9.</strong> How to Add WebAssembly Support to a General-Purpose Crate</a></li><li class="chapter-item expanded "><a href="../reference/deploying-to-production.html"><strong aria-hidden="true">5.10.</strong> Deploying Rust and WebAssembly to Production</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,15 +134,12 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="time-profiling"><a class="header" href="#time-profiling">Time Profiling</a></h1>
-<p>In this chapter, we will improve the performance of our Game of Life
-implementation. We will use time profiling to guide our efforts.</p>
-<p>Familiarize yourself with <a href="../reference/time-profiling.html">the available tools for time profiling Rust and
-WebAssembly code</a> before continuing.</p>
-<h2 id="creating-a-frames-per-second-timer-with-the-windowperformancenow-function"><a class="header" href="#creating-a-frames-per-second-timer-with-the-windowperformancenow-function">Creating a Frames Per Second Timer with the <code>window.performance.now</code> Function</a></h2>
-<p>This FPS timer will be useful as we investigate speeding up our Game of Life's
-rendering.</p>
-<p>We start by adding an <code>fps</code> object to <code>wasm-game-of-life/www/index.js</code>:</p>
+                        <h1 id="时间分析"><a class="header" href="#时间分析">时间分析</a></h1>
+<p>在本章中，我们将提高生命游戏实现的性能。 我们将使用时间分析来指导我们的工作。</p>
+<p>在继续之前熟悉 <a href="../reference/time-profiling.html">用于时间分析 Rust 和 WebAssembly 代码的可用工具</a>。 </p>
+<h2 id="使用-windowperformancenow-函数创建每秒帧数计时器"><a class="header" href="#使用-windowperformancenow-函数创建每秒帧数计时器">使用 <code>window.performance.now</code> 函数创建每秒帧数计时器</a></h2>
+<p>当我们研究加速生命游戏的渲染时，这个 FPS 计时器将非常有用。</p>
+<p>我们首先向 <code>wasm-game-of-life/www/index.js</code> 添加一个 <code>fps</code> 对象： </p>
 <pre><code class="language-js">const fps = new class {
   constructor() {
     this.fps = document.getElementById(&quot;fps&quot;);
@@ -186,7 +183,7 @@ max of last 100 = ${Math.round(max)}
   }
 };
 </code></pre>
-<p>Next we call the <code>fps</code> <code>render</code> function on each iteration of <code>renderLoop</code>:</p>
+<p>接下来我们在 <code>renderLoop</code> 的每次迭代中调用 <code>fps</code> <code>render</code> 函数：</p>
 <pre><code class="language-js">const renderLoop = () =&gt; {
     fps.render(); //new
 
@@ -197,30 +194,26 @@ max of last 100 = ${Math.round(max)}
     animationId = requestAnimationFrame(renderLoop);
 };
 </code></pre>
-<p>Finally, don't forget to add the <code>fps</code> element to
-<code>wasm-game-of-life/www/index.html</code>, just above the <code>&lt;canvas&gt;</code>:</p>
+<p>最后，不要忘记将 <code>fps</code> 元素添加到 <code>wasm-game-of-life/www/index.html</code>，就在 <code>&lt;canvas&gt;</code> 的上方:</p>
 <pre><code class="language-html">&lt;div id=&quot;fps&quot;&gt;&lt;/div&gt;
 </code></pre>
-<p>And add CSS to make its formatting nice:</p>
+<p>并添加 CSS 以使其格式更好：</p>
 <pre><code class="language-css">#fps {
   white-space: pre;
   font-family: monospace;
 }
 </code></pre>
-<p>And voila! Refresh <a href="http://localhost:8080">http://localhost:8080</a> and now we
-have an FPS counter!</p>
-<h3 id="time-each-universetick-with-consoletime-and-consoletimeend"><a class="header" href="#time-each-universetick-with-consoletime-and-consoletimeend">Time Each <code>Universe::tick</code> with <code>console.time</code> and <code>console.timeEnd</code></a></h3>
-<p>To measure how long each invocation of <code>Universe::tick</code> takes, we can use
-<code>console.time</code> and <code>console.timeEnd</code> via the <code>web-sys</code> crate.</p>
-<p>First, add <code>web-sys</code> as a dependency to <code>wasm-game-of-life/Cargo.toml</code>:</p>
+<p>瞧！ 刷新 <a href="http://localhost:8080">http://localhost:8080</a> 现在我们有了一个 FPS 计数器！ </p>
+<h3 id="使用-consoletime-和-consoletimeend-为每个-universetick-计时"><a class="header" href="#使用-consoletime-和-consoletimeend-为每个-universetick-计时">使用 <code>console.time</code> 和 <code>console.timeEnd</code> 为每个 <code>Universe::tick</code> 计时</a></h3>
+<p>为了测量每次调用 <code>Universe::tick</code> 需要多长时间，我们可以通过 <code>web-sys</code> crate 使用 <code>console.time</code> 和 <code>console.timeEnd</code>。</p>
+<p>首先，将 <code>web-sys</code> 作为依赖添加到 <code>wasm-game-of-life/Cargo.toml</code>：</p>
 <pre><code class="language-toml">[dependencies.web-sys]
 version = &quot;0.3&quot;
 features = [
   &quot;console&quot;,
 ]
 </code></pre>
-<p>Because there should be a corresponding <code>console.timeEnd</code> invocation for every
-<code>console.time</code> call, it is convenient to wrap them both up in an <a href="https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization">RAII</a> type:</p>
+<p>因为每个 <code>console.time</code> 调用都应该有一个相应的 <code>console.timeEnd</code> 调用，所以将它们都包装在 <a href="https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization">RAII</a> 类型中会很方便：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -245,59 +238,42 @@ impl&lt;'a&gt; Drop for Timer&lt;'a&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Then, we can time how long each <code>Universe::tick</code> takes by adding this snippet to
-the top of the method:</p>
+<p>然后，我们可以通过将此代码段添加到方法的顶部来计算每个 <code>Universe::tick</code> 花费的时间：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let _timer = Timer::new(&quot;Universe::tick&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<p>The time of how long each call to <code>Universe::tick</code> took are now logged in the
-console:</p>
+<p>每次调用 <code>Universe::tick</code> 花费的时间现在记录在控制台中：</p>
 <p><a href="../images/game-of-life/console-time.png"><img src="../images/game-of-life/console-time.png" alt="Screenshot of console.time logs" /></a></p>
-<p>Additionally, <code>console.time</code> and <code>console.timeEnd</code> pairs will show up in your
-browser's profiler's &quot;timeline&quot; or &quot;waterfall&quot; view:</p>
+<p>此外，<code>console.time</code> 和 <code>console.timeEnd</code> 对将显示在浏览器的分析器的 “时间轴” 或“ 瀑布” 视图中：</p>
 <p><a href="../images/game-of-life/console-time-in-profiler.png"><img src="../images/game-of-life/console-time-in-profiler.png" alt="Screenshot of console.time logs" /></a></p>
-<h2 id="growing-our-game-of-life-universe"><a class="header" href="#growing-our-game-of-life-universe">Growing our Game of Life Universe</a></h2>
+<h2 id="发展我们的生命游戏宇宙"><a class="header" href="#发展我们的生命游戏宇宙">发展我们的生命游戏宇宙</a></h2>
 <blockquote>
-<p>⚠️ This section utilizes example screenshots from Firefox. While all modern
-browsers have similar tools, there might be slight nuances to working with
-different developer tools. The profile information you extract will be
-essentially the same, but your mileage might vary in terms of the views you
-see and the naming of different tools.</p>
+<p>⚠️ 本节使用来自 Firefox 的示例屏幕截图。 
+虽然所有现代浏览器都有类似的工具，但使用不同的开发人员工具可能会有细微的差别。 
+您提取的配置文件信息将基本相同，但您所看到的视图和不同工具的命名可能会有所不同。</p>
 </blockquote>
-<p>What happens if we make our Game of Life universe larger? Replacing the 64 by 64
-universe with a 128 by 128 universe (by modifying <code>Universe::new</code> in
-<code>wasm-game-of-life/src/lib.rs</code>) results in FPS dropping from a smooth 60 to a
-choppy 40-ish on my machine.</p>
-<p>If we record a profile and look at the waterfall view, we see that each
-animation frame is taking over 20 milliseconds. Recall that 60 frames per second
-leaves sixteen milliseconds for the whole process of rendering a frame. That's
-not just our JavaScript and WebAssembly, but also everything else the browser is
-doing, such as painting.</p>
+<p>如果我们让生命游戏的宇宙更大，会发生什么？ 用 128 x 128 Universe 替换 64 x 64 Universe（通过修改 <code>wasm-game-of-life/src/lib.rs</code> 中的 <code>Universe::new</code>）导致 FPS 从平滑的 60 下降到不稳定的 40-ish 在我的机器上。</p>
+<p>如果我们记录一个配置文件并查看瀑布视图，我们会看到每个动画帧花费了 20 毫秒以上。 回想一下，每秒 60 帧为渲染一帧的整个过程留下了 16 毫秒。 这不仅仅是我们的 JavaScript 和 WebAssembly，还有浏览器正在做的所有其他事情，比如绘画。</p>
 <p><a href="../images/game-of-life/drawCells-before-waterfall.png"><img src="../images/game-of-life/drawCells-before-waterfall.png" alt="Screenshot of a waterfall view of rendering a frame" /></a></p>
-<p>If we look at what happens within a single animation frame, we see that the
-<code>CanvasRenderingContext2D.fillStyle</code> setter is very expensive!</p>
+<p>如果我们查看单个动画帧内发生的情况，我们会发现<code>CanvasRenderingContext2D.fillStyle</code> setter 非常昂贵！ </p>
 <blockquote>
-<p>⚠️ In Firefox, if you see a line that simply says &quot;DOM&quot; instead of the
-<code>CanvasRenderingContext2D.fillStyle</code> mentioned above, you may need to turn on
-the option for &quot;Show Gecko Platform Data&quot; in your performance developer tools
-options:</p>
+<p>⚠️ 在 Firefox 中，如果您看到一行简单地说“DOM”
+而不是上面提到的“CanvasRenderingContext2D.fillStyle”，
+则可能需要在性能开发人员工具选项中打开“显示 Gecko 平台数据”选项： </p>
 <p><a href="../images/game-of-life/profiler-firefox-show-gecko-platform.png"><img src="../images/game-of-life/profiler-firefox-show-gecko-platform.png" alt="Turning on Show Gecko Platform Data" /></a></p>
 </blockquote>
 <p><a href="../images/game-of-life/drawCells-before-flamegraph.png"><img src="../images/game-of-life/drawCells-before-flamegraph.png" alt="Screenshot of a flamegraph view of rendering a frame" /></a></p>
-<p>And we can confirm that this isn't an abnormality by looking at the call tree's
-aggregation of many frames:</p>
+<p>我们可以通过查看调用树的许多帧的聚合来确认这不是异常：</p>
 <p><a href="../images/game-of-life/drawCells-before-calltree.png"><img src="../images/game-of-life/drawCells-before-calltree.png" alt="Screenshot of a flamegraph view of rendering a frame" /></a></p>
-<p>Nearly 40% of our time is spent in this setter!</p>
+<p>我们将近 40% 的时间都花在了这个 setter 上！</p>
 <blockquote>
-<p>⚡ We might have expected something in the <code>tick</code> method to be the performance
-bottleneck, but it wasn't. Always let profiling guide your focus, since time
-may be spent in places you don't expect it to be.</p>
+<p>⚡ 我们可能已经预料到 <code>tick</code> 方法中的某些东西会成为性能瓶颈，
+但事实并非如此。 始终让分析引导您的注意力，因为时间可能会花在您不期望的地方。</p>
 </blockquote>
-<p>In the <code>drawCells</code> function in <code>wasm-game-of-life/www/index.js</code>, the <code>fillStyle</code>
-property is set once for every cell in the universe, on every animation frame:</p>
+<p>在 <code>wasm-game-of-life/www/index.js</code> 的 <code>drawCells</code> 函数中，<code>fillStyle</code> 属性为 Universe 中的每个单元格在每个动画帧上设置一次： </p>
 <pre><code class="language-js">for (let row = 0; row &lt; height; row++) {
   for (let col = 0; col &lt; width; col++) {
     const idx = getIndex(row, col);
@@ -315,12 +291,7 @@ property is set once for every cell in the universe, on every animation frame:</
   }
 }
 </code></pre>
-<p>Now that we have discovered that setting <code>fillStyle</code> is so expensive, what can
-we do to avoid setting it so often? We need to change <code>fillStyle</code> depending on
-whether a cell is alive or dead. If we set <code>fillStyle = ALIVE_COLOR</code> and then
-draw every alive cell in one pass, and then set <code>fillStyle = DEAD_COLOR</code> and
-draw every dead cell in another pass, then we only end setting <code>fillStyle</code>
-twice, rather than once for every cell.</p>
+<p>既然我们已经发现设置<code>fillStyle</code>是如此昂贵，那么我们该如何做才能避免频繁地设置它？我们需要根据一个单元格是活的还是死的来改变<code>fillStyle</code>。如果我们设置<code>fillStyle = ALIVE_COLOR</code>，然后在一次绘制所有活着的单元格，然后设置<code>fillStyle = DEAD_COLOR</code>，在另一次绘制所有死亡的单元格，那么我们只需要设置<code>fillStyle</code>两次，而不是对每个单元格设置一次。</p>
 <pre><code class="language-js">// Alive cells.
 ctx.fillStyle = ALIVE_COLOR;
 for (let row = 0; row &lt; height; row++) {
@@ -357,31 +328,19 @@ for (let row = 0; row &lt; height; row++) {
   }
 }
 </code></pre>
-<p>After saving these changes and refreshing
-<a href="http://localhost:8080/">http://localhost:8080/</a>, rendering is back to a smooth
-60 frames per second.</p>
-<p>If we take another profile, we can see that only about ten milliseconds are
-spent in each animation frame now.</p>
+<p>保存这些变化并刷新<a href="http://localhost:8080/">http://localhost:8080/</a>后，渲染又恢复到每秒60帧的平稳状态。</p>
+<p>如果我们再拍一张剖面图，我们可以看到现在每个动画帧只花了大约10毫秒。</p>
 <p><a href="../images/game-of-life/drawCells-after-waterfall.png"><img src="../images/game-of-life/drawCells-after-waterfall.png" alt="Screenshot of a waterfall view of rendering a frame after the drawCells changes" /></a></p>
-<p>Breaking down a single frame, we see that the <code>fillStyle</code> cost is gone, and most
-of our frame's time is spent within <code>fillRect</code>, drawing each cell's rectangle.</p>
+<p>分解一个单一的框架，我们看到<code>fillStyle</code>的成本已经没有了，我们框架的大部分时间是在<code>fillRect</code>中度过的，绘制每个单元格的矩形。</p>
 <p><a href="../images/game-of-life/drawCells-after-flamegraph.png"><img src="../images/game-of-life/drawCells-after-flamegraph.png" alt="Screenshot of a flamegraph view of rendering a frame after the drawCells changes" /></a></p>
-<h2 id="making-time-run-faster"><a class="header" href="#making-time-run-faster">Making Time Run Faster</a></h2>
-<p>Some folks don't like waiting around, and would prefer if instead of one tick of
-the universe occurred per animation frame, nine ticks did. We can modify the
-<code>renderLoop</code> function in <code>wasm-game-of-life/www/index.js</code> to do this quite
-easily:</p>
+<h2 id="让时间跑得更快"><a class="header" href="#让时间跑得更快">让时间跑得更快</a></h2>
+<p>有些人不喜欢等待，他们希望每一帧动画不是发生一次宇宙的跳动，而是发生九次跳动。我们可以修改<code>wasm-game-of-life/www/index.js</code>中的<code>renderLoop</code>函数来实现这个目的。</p>
 <pre><code class="language-js">for (let i = 0; i &lt; 9; i++) {
   universe.tick();
 }
 </code></pre>
-<p>On my machine, this brings us back down to only 35 frames per second. No
-good. We want that buttery 60!</p>
-<p>Now we know that time is being spent in <code>Universe::tick</code>, so let's add some
-<code>Timer</code>s to wrap various bits of it in <code>console.time</code> and <code>console.timeEnd</code>
-calls, and see where that leads us. My hypothesis is that allocating a new
-vector of cells and freeing the old vector on every tick is costly, and taking
-up a significant portion of our time budget.</p>
+<p>在我的机器上，这使我们回落到每秒只有35帧。这可不好。我们要的是奶油般的60帧!</p>
+<p>现在我们知道时间是在 <code>Universe::tick</code> 中度过的，所以让我们添加一些 <code>Timer</code>，在 <code>console.time</code> 和 <code>console.timeEnd</code> 的调用中包住它的各个部分，看看这将会给我们带来什么。我的假设是，在每个tick上分配一个新的单元格向量并释放旧的向量是昂贵的，并且占用了我们时间预算的很大一部分。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -428,18 +387,10 @@ up a significant portion of our time budget.</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Looking at the timings, it is clear that my hypothesis is incorrect: the vast
-majority of time is spent actually calculating the next generation of
-cells. Allocating and freeing a vector on every tick appears to have negligible
-cost, surprisingly. Another reminder to always guide our efforts with profiling!</p>
+<p>看一下时间，很明显我的假设是不正确的：绝大部分时间都花在了实际计算下一代的单元上。令人惊讶的是，在每次勾选时分配和释放一个载体的成本似乎可以忽略不计。又一次提醒我们要始终用剖析来指导我们的工作!</p>
 <p><a href="../images/game-of-life/console-time-in-universe-tick.png"><img src="../images/game-of-life/console-time-in-universe-tick.png" alt="Screenshot of a Universe::tick timer results" /></a></p>
-<p>The next section requires the <code>nightly</code> compiler. It's required because of
-the <a href="https://doc.rust-lang.org/unstable-book/library-features/test.html">test feature gate</a>
-we're going to use for the benchmarks. Another tool we will install is <a href="https://github.com/BurntSushi/cargo-benchcmp">cargo benchcmp</a>.
-It's a small utility for comparing micro-benchmarks produced by <code>cargo bench</code>.</p>
-<p>Let's write a native code <code>#[bench]</code> doing the same thing that our WebAssembly
-is doing, but where we can use more mature profiling tools. Here is the new
-<code>wasm-game-of-life/benches/bench.rs</code>:</p>
+<p>下一节要求使用<code>nightly</code>编译器。之所以需要它，是因为我们要用<a href="https://doc.rust-lang.org/unstable-book/library-features/test.html">test feature gate</a>来做基准测试。我们要安装的另一个工具是<a href="https://github.com/BurntSushi/cargo-benchcmp">cargo benchcmp</a>。它是一个小工具，用于比较由<code>cargo bench</code>产生的微观基准。</p>
+<p>让我们写一个本地代码<code>#[bench]</code>，做与我们的WebAssembly相同的事情，但在这里我们可以使用更成熟的剖析工具。这里是新的<code>wasm-game-of-life/benches/bench.rs</code>。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span>#![feature(test)]
@@ -458,12 +409,8 @@ fn universe_ticks(b: &amp;mut test::Bencher) {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>We also have to comment out all the <code>#[wasm_bindgen]</code> annotations, and the
-<code>&quot;cdylib&quot;</code> bits from <code>Cargo.toml</code> or else building native code will fail and
-have link errors.</p>
-<p>With all that in place, we can run <code>cargo bench | tee before.txt</code> to compile and run our
-benchmark! The <code>| tee before.txt</code> part will take the output from <code>cargo bench</code> and put in a file
-called <code>before.txt</code>.</p>
+<p>我们还必须注释掉所有的<code>#[wasm_bindgen]</code>注释，以及<code>Cargo.toml</code>中的<code>&quot;dylib&quot;</code>位，否则构建本地代码会失败，并出现链接错误。</p>
+<p>有了这些，我们就可以运行<code>cargo bench | tee before.txt</code>来编译和运行我们的基准测试了 <code>| tee before.txt</code>部分将从<code>cargo bench</code>中获取输出，并放入一个名为<code>before.txt</code>的文件。</p>
 <pre><code>$ cargo bench | tee before.txt
     Finished release [optimized + debuginfo] target(s) in 0.0 secs
      Running target/release/deps/wasm_game_of_life-91574dfbe2b5a124
@@ -491,20 +438,12 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured; 0 filtered out
 [ perf record: Woken up 1 times to write data ]
 [ perf record: Captured and wrote 0.178 MB perf.data (2349 samples) ]
 </code></pre>
-<p>Loading up the profile with <code>perf report</code> shows that all of our time is spent in
-<code>Universe::tick</code>, as expected:</p>
+<p>用 <code>perf report </code> 加载配置文件显示，我们所有的时间都花在了 <code>Universe::tick</code> 上，正如预期：</p>
 <p><a href="../images/game-of-life/bench-perf-report.png"><img src="../images/game-of-life/bench-perf-report.png" alt="Screenshot of perf report" /></a></p>
-<p><code>perf</code> will annotate which instructions in a function time is being spent at if
-you press <code>a</code>:</p>
+<p>如果你按下<code>a</code>，<code>perf</code> 将注解函数中的哪些指令正在花费时间：</p>
 <p><a href="../images/game-of-life/bench-perf-annotate.png"><img src="../images/game-of-life/bench-perf-annotate.png" alt="Screenshot of perf's instruction annotation" /></a></p>
-<p>This tells us that 26.67% of time is being spent summing neighboring cells'
-values, 23.41% of time is spent getting the neighbor's column index, and another
-15.42% of time is spent getting the neighbor's row index. Of these top three
-most expensive instructions, the second and third are both costly <code>div</code>
-instructions. These <code>div</code>s implement the modulo indexing logic in
-<code>Universe::live_neighbor_count</code>.</p>
-<p>Recall the <code>live_neighbor_count</code> definition inside
-<code>wasm-game-of-life/src/lib.rs</code>:</p>
+<p>这告诉我们，26.67%的时间花在相邻单元格的数值相加上，23.41%的时间花在获取相邻的列索引上，另外15.42%的时间花在获取相邻的行索引上。在这前三个最昂贵的指令中，第二和第三条都是昂贵的<code>div</code>指令。这些<code>div</code>实现了<code>Universe::live_neighbor_count</code>中的模数索引逻辑。</p>
+<p>回顾一下<code>wasm-game-of-life/src/lib.rs</code>中的<code>live_neighbor_count</code>定义:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -526,13 +465,8 @@ instructions. These <code>div</code>s implement the modulo indexing logic in
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>The reason we used modulo was to avoid cluttering up the code with <code>if</code> branches
-for the first or last row or column edge cases. But we are paying the cost of a
-<code>div</code> instruction even for the most common case, when neither <code>row</code> nor <code>column</code>
-is on the edge of the universe and they don't need the modulo wrapping
-treatment. Instead, if we use <code>if</code>s for the edge cases and unroll this loop, the
-branches <em>should</em> be very well-predicted by the CPU's branch predictor.</p>
-<p>Let's rewrite <code>live_neighbor_count</code> like this:</p>
+<p>我们使用模数的原因是为了避免在第一或最后一行或一列的边缘情况下用<code>if</code>分支使代码变得混乱。但是，即使在最常见的情况下，我们也要付出<code>div</code>指令的代价，当<code>row</code>和<code>column</code>都不在宇宙的边缘，它们不需要模数包装处理。相反，如果我们使用<code>if</code>s来处理边缘情况，并解开这个循环，分支<em>应该</em>被CPU的分支预测器很好地预测到。</p>
+<p>让我们这样重写<code>live_neighbor_count</code>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -591,7 +525,7 @@ branches <em>should</em> be very well-predicted by the CPU's branch predictor.</
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Now let's run the benchmarks again! This time output it to <code>after.txt</code>.</p>
+<p>现在让我们再运行一次基准测试! 这次把它输出到<code>after.txt</code>。</p>
 <pre><code>$ cargo bench | tee after.txt
    Compiling wasm_game_of_life v0.1.0 (file:///home/fitzgen/wasm_game_of_life)
     Finished release [optimized + debuginfo] target(s) in 0.82 secs
@@ -608,41 +542,26 @@ test universe_ticks ... bench:      87,258 ns/iter (+/- 14,632)
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured; 0 filtered out
 </code></pre>
-<p>That looks a whole lot better! We can see just how much better it is with the <code>benchcmp</code> tool and the two text files we created before:</p>
+<p>这看起来好了很多! 我们可以通过<code>benchcmp</code>工具和我们之前创建的两个文本文件看到它有多好：</p>
 <pre><code>$ cargo benchcmp before.txt after.txt
  name            before.txt ns/iter  after.txt ns/iter  diff ns/iter   diff %  speedup
  universe_ticks  664,421             87,258                 -577,163  -86.87%   x 7.61
 </code></pre>
-<p>Wow! 7.61x speed up!</p>
-<p>WebAssembly intentionally maps closely to common hardware architectures, but we
-do need to make sure that this native code speed up translates into a
-WebAssembly speed up as well.</p>
-<p>Let's rebuild the <code>.wasm</code> with <code>wasm-pack build</code> and refresh
-<a href="http://localhost:8080/">http://localhost:8080/</a>. On my machine, the page is
-running at 60 frames per second again, and recording another profile with the
-browser's profiler reveals that each animation frame is taking about ten
-milliseconds.</p>
-<p>Success!</p>
+<p>哇！7.61倍的速度</p>
+<p>WebAssembly有意与常见的硬件架构紧密映射，但我们确实需要确保这种本地代码的速度也能转化为WebAssembly的速度。</p>
+<p>让我们用<code>wasm-pack build</code>重建<code>.wasm</code>并刷新[http://localhost:8080/]（http://localhost:8080/）。在我的机器上，该页面再次以每秒60帧的速度运行，用浏览器的剖析器记录另一个剖析，发现每个动画帧大约需要10毫秒。</p>
+<p>成功了!</p>
 <p><a href="../images/game-of-life/waterfall-after-branches-and-unrolling.png"><img src="../images/game-of-life/waterfall-after-branches-and-unrolling.png" alt="Screenshot of a waterfall view of rendering a frame after replacing modulos with branches" /></a></p>
-<h2 id="exercises"><a class="header" href="#exercises">Exercises</a></h2>
+<h2 id="练习"><a class="header" href="#练习">练习</a></h2>
 <ul>
 <li>
-<p>At this point, the next lowest hanging fruit for speeding up <code>Universe::tick</code>
-is removing the allocation and free. Implement double buffering of cells,
-where the <code>Universe</code> maintains two vectors, never frees either of them, and
-never allocates new buffers in <code>tick</code>.</p>
+<p>在这一点上，加快<code>Universe::tick</code>的下一个最低的目标是取消分配和释放。实现单元格的双重缓冲，即<code>Universe</code>维护两个向量，不释放其中任何一个，并且不在<code>tick</code>中分配新的缓冲。</p>
 </li>
 <li>
-<p>Implement the alternative, delta-based design from the &quot;Implementing Life&quot;
-chapter, where the Rust code returns a list of cells that changed states to
-JavaScript. Does this make rendering to <code>&lt;canvas&gt;</code> faster? Can you implement
-this design without allocating a new list of deltas on every tick?</p>
+<p>实现 &quot;实现生命 &quot;一章中的另一种基于delta的设计，Rust代码将改变状态的单元格的列表返回给JavaScript。这是否使渲染到<code>&lt;canvas&gt;</code>的速度更快？你能实现这种设计而不在每次勾选时分配一个新的deltas列表吗？</p>
 </li>
 <li>
-<p>As our profiling has shown us, 2D <code>&lt;canvas&gt;</code> rendering is not particularly
-fast. Replace the 2D canvas renderer with a <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGL</a> renderer. How much faster is
-the WebGL version? How large can you make the universe before WebGL rendering
-is a bottleneck?</p>
+<p>正如我们的分析所显示的，2D <code>&lt;canvas&gt;</code>的渲染不是特别快。用<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGL</a>渲染器取代2D画布渲染器。WebGL版本的速度有多大？在WebGL渲染成为瓶颈之前，你能把宇宙做得多大？</p>
 </li>
 </ul>
 
