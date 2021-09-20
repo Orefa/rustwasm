@@ -1,17 +1,14 @@
-# Time Profiling
+# 时间分析
 
-In this chapter, we will improve the performance of our Game of Life
-implementation. We will use time profiling to guide our efforts.
+在本章中，我们将提高生命游戏实现的性能。 我们将使用时间分析来指导我们的工作。
 
-Familiarize yourself with [the available tools for time profiling Rust and
-WebAssembly code](../reference/time-profiling.md) before continuing.
+在继续之前熟悉 [用于时间分析 Rust 和 WebAssembly 代码的可用工具](../reference/time-profiling.md)。 
 
-## Creating a Frames Per Second Timer with the `window.performance.now` Function
+## 使用 `window.performance.now` 函数创建每秒帧数计时器 
 
-This FPS timer will be useful as we investigate speeding up our Game of Life's
-rendering.
+当我们研究加速生命游戏的渲染时，这个 FPS 计时器将非常有用。
 
-We start by adding an `fps` object to `wasm-game-of-life/www/index.js`:
+我们首先向 `wasm-game-of-life/www/index.js` 添加一个 `fps` 对象： 
 
 ```js
 const fps = new class {
@@ -58,7 +55,7 @@ max of last 100 = ${Math.round(max)}
 };
 ```
 
-Next we call the `fps` `render` function on each iteration of `renderLoop`:
+接下来我们在 `renderLoop` 的每次迭代中调用 `fps` `render` 函数：
 
 ```js
 const renderLoop = () => {
@@ -72,14 +69,13 @@ const renderLoop = () => {
 };
 ```
 
-Finally, don't forget to add the `fps` element to
-`wasm-game-of-life/www/index.html`, just above the `<canvas>`:
+最后，不要忘记将 `fps` 元素添加到 `wasm-game-of-life/www/index.html`，就在 `<canvas>` 的上方:
 
 ```html
 <div id="fps"></div>
 ```
 
-And add CSS to make its formatting nice:
+并添加 CSS 以使其格式更好：
 
 ```css
 #fps {
@@ -88,17 +84,15 @@ And add CSS to make its formatting nice:
 }
 ```
 
-And voila! Refresh [http://localhost:8080](http://localhost:8080) and now we
-have an FPS counter!
+瞧！ 刷新 [http://localhost:8080](http://localhost:8080) 现在我们有了一个 FPS 计数器！ 
 
 [perf-now]: https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
-### Time Each `Universe::tick` with `console.time` and `console.timeEnd`
+### 使用 `console.time` 和 `console.timeEnd` 为每个 `Universe::tick` 计时 
 
-To measure how long each invocation of `Universe::tick` takes, we can use
-`console.time` and `console.timeEnd` via the `web-sys` crate.
+为了测量每次调用 `Universe::tick` 需要多长时间，我们可以通过 `web-sys` crate 使用 `console.time` 和 `console.timeEnd`。
 
-First, add `web-sys` as a dependency to `wasm-game-of-life/Cargo.toml`:
+首先，将 `web-sys` 作为依赖添加到 `wasm-game-of-life/Cargo.toml`：
 
 ```toml
 [dependencies.web-sys]
@@ -108,8 +102,7 @@ features = [
 ]
 ```
 
-Because there should be a corresponding `console.timeEnd` invocation for every
-`console.time` call, it is convenient to wrap them both up in an [RAII][] type:
+因为每个 `console.time` 调用都应该有一个相应的 `console.timeEnd` 调用，所以将它们都包装在 [RAII][] 类型中会很方便：
 
 ```rust
 extern crate web_sys;
@@ -133,71 +126,54 @@ impl<'a> Drop for Timer<'a> {
 }
 ```
 
-Then, we can time how long each `Universe::tick` takes by adding this snippet to
-the top of the method:
+然后，我们可以通过将此代码段添加到方法的顶部来计算每个 `Universe::tick` 花费的时间：
 
 ```rust
 let _timer = Timer::new("Universe::tick");
 ```
 
-The time of how long each call to `Universe::tick` took are now logged in the
-console:
+每次调用 `Universe::tick` 花费的时间现在记录在控制台中：
 
 [![Screenshot of console.time logs](../images/game-of-life/console-time.png)](../images/game-of-life/console-time.png)
 
-Additionally, `console.time` and `console.timeEnd` pairs will show up in your
-browser's profiler's "timeline" or "waterfall" view:
+此外，`console.time` 和 `console.timeEnd` 对将显示在浏览器的分析器的 “时间轴” 或“ 瀑布” 视图中：
 
 [![Screenshot of console.time logs](../images/game-of-life/console-time-in-profiler.png)](../images/game-of-life/console-time-in-profiler.png)
 
 [RAII]: https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization
 
-## Growing our Game of Life Universe
+## 发展我们的生命游戏宇宙
 
-> ⚠️ This section utilizes example screenshots from Firefox. While all modern
-> browsers have similar tools, there might be slight nuances to working with
-> different developer tools. The profile information you extract will be
-> essentially the same, but your mileage might vary in terms of the views you
-> see and the naming of different tools.
+> ⚠️ 本节使用来自 Firefox 的示例屏幕截图。 
+> 虽然所有现代浏览器都有类似的工具，但使用不同的开发人员工具可能会有细微的差别。 
+> 您提取的配置文件信息将基本相同，但您所看到的视图和不同工具的命名可能会有所不同。
 
-What happens if we make our Game of Life universe larger? Replacing the 64 by 64
-universe with a 128 by 128 universe (by modifying `Universe::new` in
-`wasm-game-of-life/src/lib.rs`) results in FPS dropping from a smooth 60 to a
-choppy 40-ish on my machine.
+如果我们让生命游戏的宇宙更大，会发生什么？ 用 128 x 128 Universe 替换 64 x 64 Universe（通过修改 `wasm-game-of-life/src/lib.rs` 中的 `Universe::new`）导致 FPS 从平滑的 60 下降到不稳定的 40-ish 在我的机器上。
 
-If we record a profile and look at the waterfall view, we see that each
-animation frame is taking over 20 milliseconds. Recall that 60 frames per second
-leaves sixteen milliseconds for the whole process of rendering a frame. That's
-not just our JavaScript and WebAssembly, but also everything else the browser is
-doing, such as painting.
+如果我们记录一个配置文件并查看瀑布视图，我们会看到每个动画帧花费了 20 毫秒以上。 回想一下，每秒 60 帧为渲染一帧的整个过程留下了 16 毫秒。 这不仅仅是我们的 JavaScript 和 WebAssembly，还有浏览器正在做的所有其他事情，比如绘画。
 
 [![Screenshot of a waterfall view of rendering a frame](../images/game-of-life/drawCells-before-waterfall.png)](../images/game-of-life/drawCells-before-waterfall.png)
 
-If we look at what happens within a single animation frame, we see that the
-`CanvasRenderingContext2D.fillStyle` setter is very expensive!
+如果我们查看单个动画帧内发生的情况，我们会发现`CanvasRenderingContext2D.fillStyle` setter 非常昂贵！ 
 
-> ⚠️ In Firefox, if you see a line that simply says "DOM" instead of the
-> `CanvasRenderingContext2D.fillStyle` mentioned above, you may need to turn on
-> the option for "Show Gecko Platform Data" in your performance developer tools
-> options:
+> ⚠️ 在 Firefox 中，如果您看到一行简单地说“DOM”
+> 而不是上面提到的“CanvasRenderingContext2D.fillStyle”，
+> 则可能需要在性能开发人员工具选项中打开“显示 Gecko 平台数据”选项： 
 >
 > [![Turning on Show Gecko Platform Data](../images/game-of-life/profiler-firefox-show-gecko-platform.png)](../images/game-of-life/profiler-firefox-show-gecko-platform.png)
 
 [![Screenshot of a flamegraph view of rendering a frame](../images/game-of-life/drawCells-before-flamegraph.png)](../images/game-of-life/drawCells-before-flamegraph.png)
 
-And we can confirm that this isn't an abnormality by looking at the call tree's
-aggregation of many frames:
+我们可以通过查看调用树的许多帧的聚合来确认这不是异常：
 
 [![Screenshot of a flamegraph view of rendering a frame](../images/game-of-life/drawCells-before-calltree.png)](../images/game-of-life/drawCells-before-calltree.png)
 
-Nearly 40% of our time is spent in this setter!
+我们将近 40% 的时间都花在了这个 setter 上！
 
-> ⚡ We might have expected something in the `tick` method to be the performance
-> bottleneck, but it wasn't. Always let profiling guide your focus, since time
-> may be spent in places you don't expect it to be.
+> ⚡ 我们可能已经预料到 `tick` 方法中的某些东西会成为性能瓶颈，
+> 但事实并非如此。 始终让分析引导您的注意力，因为时间可能会花在您不期望的地方。
 
-In the `drawCells` function in `wasm-game-of-life/www/index.js`, the `fillStyle`
-property is set once for every cell in the universe, on every animation frame:
+在 `wasm-game-of-life/www/index.js` 的 `drawCells` 函数中，`fillStyle` 属性为 Universe 中的每个单元格在每个动画帧上设置一次： 
 
 ```js
 for (let row = 0; row < height; row++) {
@@ -218,12 +194,7 @@ for (let row = 0; row < height; row++) {
 }
 ```
 
-Now that we have discovered that setting `fillStyle` is so expensive, what can
-we do to avoid setting it so often? We need to change `fillStyle` depending on
-whether a cell is alive or dead. If we set `fillStyle = ALIVE_COLOR` and then
-draw every alive cell in one pass, and then set `fillStyle = DEAD_COLOR` and
-draw every dead cell in another pass, then we only end setting `fillStyle`
-twice, rather than once for every cell.
+既然我们已经发现设置`fillStyle`是如此昂贵，那么我们该如何做才能避免频繁地设置它？我们需要根据一个单元格是活的还是死的来改变`fillStyle`。如果我们设置`fillStyle = ALIVE_COLOR`，然后在一次绘制所有活着的单元格，然后设置`fillStyle = DEAD_COLOR`，在另一次绘制所有死亡的单元格，那么我们只需要设置`fillStyle`两次，而不是对每个单元格设置一次。
 
 ```js
 // Alive cells.
@@ -263,26 +234,19 @@ for (let row = 0; row < height; row++) {
 }
 ```
 
-After saving these changes and refreshing
-[http://localhost:8080/](http://localhost:8080/), rendering is back to a smooth
-60 frames per second.
+保存这些变化并刷新[http://localhost:8080/](http://localhost:8080/)后，渲染又恢复到每秒60帧的平稳状态。
 
-If we take another profile, we can see that only about ten milliseconds are
-spent in each animation frame now.
+如果我们再拍一张剖面图，我们可以看到现在每个动画帧只花了大约10毫秒。
 
 [![Screenshot of a waterfall view of rendering a frame after the drawCells changes](../images/game-of-life/drawCells-after-waterfall.png)](../images/game-of-life/drawCells-after-waterfall.png)
 
-Breaking down a single frame, we see that the `fillStyle` cost is gone, and most
-of our frame's time is spent within `fillRect`, drawing each cell's rectangle.
+分解一个单一的框架，我们看到`fillStyle`的成本已经没有了，我们框架的大部分时间是在`fillRect`中度过的，绘制每个单元格的矩形。
 
 [![Screenshot of a flamegraph view of rendering a frame after the drawCells changes](../images/game-of-life/drawCells-after-flamegraph.png)](../images/game-of-life/drawCells-after-flamegraph.png)
 
-## Making Time Run Faster
+## 让时间跑得更快
 
-Some folks don't like waiting around, and would prefer if instead of one tick of
-the universe occurred per animation frame, nine ticks did. We can modify the
-`renderLoop` function in `wasm-game-of-life/www/index.js` to do this quite
-easily:
+有些人不喜欢等待，他们希望每一帧动画不是发生一次宇宙的跳动，而是发生九次跳动。我们可以修改`wasm-game-of-life/www/index.js`中的`renderLoop`函数来实现这个目的。
 
 ```js
 for (let i = 0; i < 9; i++) {
@@ -290,14 +254,9 @@ for (let i = 0; i < 9; i++) {
 }
 ```
 
-On my machine, this brings us back down to only 35 frames per second. No
-good. We want that buttery 60!
+在我的机器上，这使我们回落到每秒只有35帧。这可不好。我们要的是奶油般的60帧!
 
-Now we know that time is being spent in `Universe::tick`, so let's add some
-`Timer`s to wrap various bits of it in `console.time` and `console.timeEnd`
-calls, and see where that leads us. My hypothesis is that allocating a new
-vector of cells and freeing the old vector on every tick is costly, and taking
-up a significant portion of our time budget.
+现在我们知道时间是在 `Universe::tick` 中度过的，所以让我们添加一些 `Timer`，在 `console.time` 和 `console.timeEnd` 的调用中包住它的各个部分，看看这将会给我们带来什么。我的假设是，在每个tick上分配一个新的单元格向量并释放旧的向量是昂贵的，并且占用了我们时间预算的很大一部分。
 
 ```rust
 pub fn tick(&mut self) {
@@ -343,23 +302,15 @@ pub fn tick(&mut self) {
 }
 ```
 
-Looking at the timings, it is clear that my hypothesis is incorrect: the vast
-majority of time is spent actually calculating the next generation of
-cells. Allocating and freeing a vector on every tick appears to have negligible
-cost, surprisingly. Another reminder to always guide our efforts with profiling!
+看一下时间，很明显我的假设是不正确的：绝大部分时间都花在了实际计算下一代的单元上。令人惊讶的是，在每次勾选时分配和释放一个载体的成本似乎可以忽略不计。又一次提醒我们要始终用剖析来指导我们的工作!
 
 [![Screenshot of a Universe::tick timer results](../images/game-of-life/console-time-in-universe-tick.png)](../images/game-of-life/console-time-in-universe-tick.png)
 
-The next section requires the `nightly` compiler. It's required because of
-the [test feature gate](https://doc.rust-lang.org/unstable-book/library-features/test.html)
-we're going to use for the benchmarks. Another tool we will install is [cargo benchcmp][benchcmp].
-It's a small utility for comparing micro-benchmarks produced by `cargo bench`.
+下一节要求使用`nightly`编译器。之所以需要它，是因为我们要用[test feature gate](https://doc.rust-lang.org/unstable-book/library-features/test.html)来做基准测试。我们要安装的另一个工具是[cargo benchcmp][benchcmp]。它是一个小工具，用于比较由`cargo bench`产生的微观基准。
 
 [benchcmp]: https://github.com/BurntSushi/cargo-benchcmp
 
-Let's write a native code `#[bench]` doing the same thing that our WebAssembly
-is doing, but where we can use more mature profiling tools. Here is the new
-`wasm-game-of-life/benches/bench.rs`:
+让我们写一个本地代码`#[bench]`，做与我们的WebAssembly相同的事情，但在这里我们可以使用更成熟的剖析工具。这里是新的`wasm-game-of-life/benches/bench.rs`。
 
 ```rust
 #![feature(test)]
@@ -377,13 +328,9 @@ fn universe_ticks(b: &mut test::Bencher) {
 }
 ```
 
-We also have to comment out all the `#[wasm_bindgen]` annotations, and the
-`"cdylib"` bits from `Cargo.toml` or else building native code will fail and
-have link errors.
+我们还必须注释掉所有的`#[wasm_bindgen]`注释，以及`Cargo.toml`中的`"dylib"`位，否则构建本地代码会失败，并出现链接错误。
 
-With all that in place, we can run `cargo bench | tee before.txt` to compile and run our
-benchmark! The `| tee before.txt` part will take the output from `cargo bench` and put in a file
-called `before.txt`.
+有了这些，我们就可以运行`cargo bench | tee before.txt`来编译和运行我们的基准测试了 `| tee before.txt`部分将从`cargo bench`中获取输出，并放入一个名为`before.txt`的文件。
 
 ```
 $ cargo bench | tee before.txt
@@ -419,25 +366,17 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured; 0 filtered out
 [ perf record: Captured and wrote 0.178 MB perf.data (2349 samples) ]
 ```
 
-Loading up the profile with `perf report` shows that all of our time is spent in
-`Universe::tick`, as expected:
+用 `perf report ` 加载配置文件显示，我们所有的时间都花在了 `Universe::tick` 上，正如预期：
 
 [![Screenshot of perf report](../images/game-of-life/bench-perf-report.png)](../images/game-of-life/bench-perf-report.png)
 
-`perf` will annotate which instructions in a function time is being spent at if
-you press `a`:
+如果你按下`a`，`perf` 将注解函数中的哪些指令正在花费时间：
 
 [![Screenshot of perf's instruction annotation](../images/game-of-life/bench-perf-annotate.png)](../images/game-of-life/bench-perf-annotate.png)
 
-This tells us that 26.67% of time is being spent summing neighboring cells'
-values, 23.41% of time is spent getting the neighbor's column index, and another
-15.42% of time is spent getting the neighbor's row index. Of these top three
-most expensive instructions, the second and third are both costly `div`
-instructions. These `div`s implement the modulo indexing logic in
-`Universe::live_neighbor_count`.
+这告诉我们，26.67%的时间花在相邻单元格的数值相加上，23.41%的时间花在获取相邻的列索引上，另外15.42%的时间花在获取相邻的行索引上。在这前三个最昂贵的指令中，第二和第三条都是昂贵的`div`指令。这些`div`实现了`Universe::live_neighbor_count`中的模数索引逻辑。
 
-Recall the `live_neighbor_count` definition inside
-`wasm-game-of-life/src/lib.rs`:
+回顾一下`wasm-game-of-life/src/lib.rs`中的`live_neighbor_count`定义:
 
 ```rust
 fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
@@ -458,14 +397,9 @@ fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
 }
 ```
 
-The reason we used modulo was to avoid cluttering up the code with `if` branches
-for the first or last row or column edge cases. But we are paying the cost of a
-`div` instruction even for the most common case, when neither `row` nor `column`
-is on the edge of the universe and they don't need the modulo wrapping
-treatment. Instead, if we use `if`s for the edge cases and unroll this loop, the
-branches *should* be very well-predicted by the CPU's branch predictor.
+我们使用模数的原因是为了避免在第一或最后一行或一列的边缘情况下用`if`分支使代码变得混乱。但是，即使在最常见的情况下，我们也要付出`div`指令的代价，当`row`和`column`都不在宇宙的边缘，它们不需要模数包装处理。相反，如果我们使用`if`s来处理边缘情况，并解开这个循环，分支*应该*被CPU的分支预测器很好地预测到。
 
-Let's rewrite `live_neighbor_count` like this:
+让我们这样重写`live_neighbor_count`:
 
 ```rust
 fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
@@ -523,7 +457,7 @@ fn live_neighbor_count(&self, row: u32, column: u32) -> u8 {
 }
 ```
 
-Now let's run the benchmarks again! This time output it to `after.txt`.
+现在让我们再运行一次基准测试! 这次把它输出到`after.txt`。
 
 ```
 $ cargo bench | tee after.txt
@@ -543,7 +477,7 @@ test universe_ticks ... bench:      87,258 ns/iter (+/- 14,632)
 test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured; 0 filtered out
 ```
 
-That looks a whole lot better! We can see just how much better it is with the `benchcmp` tool and the two text files we created before:
+这看起来好了很多! 我们可以通过`benchcmp`工具和我们之前创建的两个文本文件看到它有多好：
 
 ```
 $ cargo benchcmp before.txt after.txt
@@ -551,37 +485,22 @@ $ cargo benchcmp before.txt after.txt
  universe_ticks  664,421             87,258                 -577,163  -86.87%   x 7.61
 ```
 
-Wow! 7.61x speed up!
+哇！7.61倍的速度
 
-WebAssembly intentionally maps closely to common hardware architectures, but we
-do need to make sure that this native code speed up translates into a
-WebAssembly speed up as well.
+WebAssembly有意与常见的硬件架构紧密映射，但我们确实需要确保这种本地代码的速度也能转化为WebAssembly的速度。
 
-Let's rebuild the `.wasm` with `wasm-pack build` and refresh
-[http://localhost:8080/](http://localhost:8080/). On my machine, the page is
-running at 60 frames per second again, and recording another profile with the
-browser's profiler reveals that each animation frame is taking about ten
-milliseconds.
+让我们用`wasm-pack build`重建`.wasm`并刷新[http://localhost:8080/]（http://localhost:8080/）。在我的机器上，该页面再次以每秒60帧的速度运行，用浏览器的剖析器记录另一个剖析，发现每个动画帧大约需要10毫秒。
 
-Success!
+成功了!
 
 [![Screenshot of a waterfall view of rendering a frame after replacing modulos with branches](../images/game-of-life/waterfall-after-branches-and-unrolling.png)](../images/game-of-life/waterfall-after-branches-and-unrolling.png)
 
-## Exercises
+## 练习
 
-* At this point, the next lowest hanging fruit for speeding up `Universe::tick`
-  is removing the allocation and free. Implement double buffering of cells,
-  where the `Universe` maintains two vectors, never frees either of them, and
-  never allocates new buffers in `tick`.
+* 在这一点上，加快`Universe::tick`的下一个最低的目标是取消分配和释放。实现单元格的双重缓冲，即`Universe`维护两个向量，不释放其中任何一个，并且不在`tick`中分配新的缓冲。
 
-* Implement the alternative, delta-based design from the "Implementing Life"
-  chapter, where the Rust code returns a list of cells that changed states to
-  JavaScript. Does this make rendering to `<canvas>` faster? Can you implement
-  this design without allocating a new list of deltas on every tick?
+* 实现 "实现生命 "一章中的另一种基于delta的设计，Rust代码将改变状态的单元格的列表返回给JavaScript。这是否使渲染到`<canvas>`的速度更快？你能实现这种设计而不在每次勾选时分配一个新的deltas列表吗？
 
-* As our profiling has shown us, 2D `<canvas>` rendering is not particularly
-  fast. Replace the 2D canvas renderer with a [WebGL][webgl] renderer. How much faster is
-  the WebGL version? How large can you make the universe before WebGL rendering
-  is a bottleneck?
+* 正如我们的分析所显示的，2D `<canvas>`的渲染不是特别快。用[WebGL][webgl]渲染器取代2D画布渲染器。WebGL版本的速度有多大？在WebGL渲染成为瓶颈之前，你能把宇宙做得多大？
 
 [webgl]: https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API

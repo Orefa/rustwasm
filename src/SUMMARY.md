@@ -13,8 +13,8 @@
     - [测试康威的生命游戏](./game-of-life/testing.md)
     - [调试](./game-of-life/debugging.md)
     - [添加交互性](./game-of-life/interactivity.md)
-    - [Time Profiling](./game-of-life/time-profiling.md)
-    - [Shrinking `.wasm` Size](./game-of-life/code-size.md)
+    - [时间分析](./game-of-life/time-profiling.md)
+    - [缩小`.wasm` 大小](./game-of-life/code-size.md)
     - [Publishing to npm](./game-of-life/publishing-to-npm.md)
 --------------------------------------------------------------------------------
 - [Reference](./reference/index.md)

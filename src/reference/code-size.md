@@ -41,7 +41,7 @@ at code size are missing the forest for the trees.
 
 [hacks]: https://hacks.mozilla.org/2018/01/making-webassembly-even-faster-firefoxs-new-streaming-and-tiering-compiler/
 
-## Optimizing Builds for Code Size
+## 针对代码大小优化构建
 
 There are a bunch of configuration options we can use to get `rustc` to make
 smaller `.wasm` binaries. In some cases, we are trading longer compile times for
@@ -315,7 +315,7 @@ the function is emitted in the `.wasm`. The downside is the loss of the compiler
 optimization opportunities and the added cost of indirect, dynamically
 dispatched function calls.
 
-### Use the `wasm-snip` Tool
+### 使用 wasm-snip 工具
 
 [`wasm-snip` replaces a WebAssembly function's body with an `unreachable`
 instruction.][snip] This is a rather heavy, blunt hammer for functions that kind
