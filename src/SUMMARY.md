@@ -27,4 +27,4 @@
   - [JavaScript 互操作](./reference/js-ffi.md) 
   - [哪些板块能与WebAssembly一起使用现成的产品?](./reference/which-crates-work-with-wasm.md)
   - [如何为通用Crate添加 WebAssembly 支持](./reference/add-wasm-support-to-crate.md)
-  - [Deploying Rust and WebAssembly to Production](./reference/deploying-to-production.md)
+  - [将 Rust 和 WebAssembly 部署到生产环境](./reference/deploying-to-production.md)

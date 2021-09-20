@@ -1,39 +1,26 @@
-# Deploying Rust and WebAssembly to Production
+# 将 Rust 和 WebAssembly 部署到生产环境 
 
-> **⚡ Deploying Web applications built with Rust and WebAssembly is nearly
-> identical to deploying any other Web application!**
+> **⚡ 部署使用 Rust 和 WebAssembly 构建的 Web 应用程序几乎与部署任何其他 Web 应用程序相同！**
 
-To deploy a Web application that uses Rust-generated WebAssembly on the client,
-copy the built Web application's files to your production server's file system
-and configure your HTTP server to make them accessible.
+要在客户端部署使用 Rust 生成的 WebAssembly 的 Web 应用程序，请将构建的 Web 应用程序的文件复制到您的生产服务器的文件系统，并配置您的 HTTP 服务器以使其可访问。
 
-## Ensure that Your HTTP Server Uses the `application/wasm` MIME Type
+## 确保您的 HTTP 服务器使用 `application/wasm` MIME 类型 
 
-For the fastest page loads, you'll want to use [the
-`WebAssembly.instantiateStreaming` function][instantiateStreaming] to pipeline
-wasm compilation and instantiation with network transfer (or make sure your
-bundler is able to use that function). However, `instantiateStreaming` requires
-that the HTTP response has the `application/wasm` [MIME type][] set, or else it
-will throw an error.
+为了最快的页面加载，您需要使用 [`WebAssembly.instantiateStreaming` 函数][instantiateStreaming] 通过网络传输管道化 wasm 编译和实例化（或确保您的捆绑器能够使用该函数）。 但是，`instantiateStreaming` 要求 HTTP 响应设置了 `application/wasm` [MIME 类型][MIME type]，否则会抛出错误。 
 
-* [How to configure MIME types for the Apache HTTP server][apache-mime]
-* [How to configure MIME types for the NGINX HTTP server][nginx-mime]
+* [如何为 Apache HTTP 服务器配置 MIME 类型][apache-mime]
+* [如何为 NGINX HTTP 服务器配置 MIME 类型][nginx-mime]
 
 [instantiateStreaming]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming
 [MIME type]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
 [apache-mime]: https://httpd.apache.org/docs/2.4/mod/mod_mime.html#addtype
 [nginx-mime]: https://nginx.org/en/docs/http/ngx_http_core_module.html#types
 
-## More Resources
+## 更多资源
 
-* [Best Practices for Webpack in Production.][webpack-prod] Many Rust and
-  WebAssembly projects use Webpack to bundle their Rust-generated WebAssembly,
-  JavaScript, CSS, and HTML. This guide has tips for getting the most out of
-  Webpack when deploying to production environments.
-* [Apache documentation.][apache] Apache is a popular HTTP server for use in
-  production.
-* [NGINX documentation.][nginx] NGINX is a popular HTTP server for use in
-  production.
+* [生产中 Webpack 的最佳实践。][webpack-prod] 许多 Rust 和 WebAssembly 项目使用 Webpack 来捆绑其 Rust 生成的 WebAssembly、JavaScript、CSS 和 HTML。 本指南提供了在部署到生产环境时充分利用 Webpack 的技巧。
+* [Apache 文档。][apache] Apache 是一种用于生产的流行 HTTP 服务器。
+* [NGINX 文档。][nginx] NGINX 是一种用于生产的流行 HTTP 服务器。
 
 [webpack-prod]: https://webpack.js.org/guides/production/
 [apache]: https://httpd.apache.org/docs/
