@@ -22,7 +22,7 @@
   - [你应该知道的工具](./reference/tools.md)
   - [项目模板](./reference/project-templates.md)
   - [调试](./reference/debugging.md)
-  - [Time Profiling](./reference/time-profiling.md)
+  - [时间分析](./reference/time-profiling.md)
   - [Shrinking `.wasm` Size](./reference/code-size.md)
   - [JavaScript Interoperation](./reference/js-ffi.md)
   - [Which Crates Will Work Off-the-Shelf with WebAssembly?](./reference/which-crates-work-with-wasm.md)
