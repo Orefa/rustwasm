@@ -1,19 +1,14 @@
-# JavaScript Interoperation
+# JavaScript 互操作
 
-## Importing and Exporting JS Functions
+## 导入和导出 JS 函数
 
-### From the Rust Side
+### 从 Rust 方面 
 
-When using wasm within a JS host, importing and exporting functions from the
-Rust side is straightforward: it works very similarly to C.
+在 JS 主机中使用 wasm 时，从 Rust 端导入和导出函数很简单：它的工作方式与 C 非常相似。
 
-WebAssembly modules declare a sequence of imports, each with a *module name*
-and an *import name*. The module name for an `extern { ... }` block can be
-specified using [`#[link(wasm_import_module)]`][wasm_import_module], currently
-it defaults to "env".
+WebAssembly 模块声明了一系列导入，每个导入都有一个 *module name* 和一个 *import name*。 `extern { ... }` 块的模块名称可以使用 [`#[link(wasm_import_module)]`][wasm_import_module] 指定，目前它默认为“env”。
 
-Exports have only a single name. In addition to any `extern` functions the
-WebAssembly instance's default linear memory is exported as "memory".
+出口只有一个名称。 除了任何 `extern` 函数，WebAssembly 实例的默认线性内存被导出为“内存”。 
 
 [wasm_import_module]: https://github.com/rust-lang/rust/issues/52090
 
@@ -27,74 +22,50 @@ extern { fn foo(); }
 pub extern fn bar() { /* ... */ }
 ```
 
-Because of wasm's limited value types, these functions must operate only on
-primitive numeric types.
+由于 wasm 的值类型有限，这些函数必须仅对原始数字类型进行操作。
 
-### From the JS Side
+### 从JS端
 
-Within JS, a wasm binary turns into an ES6 module. It must be *instantiated*
-with linear memory and have a set of JS functions matching the expected
-imports.  The details of instantiation are available on [MDN][instantiation].
+在 JS 中，wasm 二进制文件变成了 ES6 模块。 它必须使用线性内存*实例化*，并具有一组匹配预期导入的 JS 函数。 实例化的详细信息可在 [MDN][instantiation] 上找到。 
 
 [instantiation]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/instantiateStreaming
 
-The resulting ES6 module will contain all of the functions exported from Rust, now
-available as JS functions.
+生成的 ES6 模块将包含从 Rust 导出的所有函数，现在可以作为 JS 函数使用。
 
-[Here][hello world] is a very simple example of the whole setup in action.
+[这里][hello world] 是整个设置的一个非常简单的示例。 
 
-[hello world]: https://www.hellorust.com/demos/add/index.html
+## 超越数字
 
-## Going Beyond Numerics
+在 JS 中使用 wasm 时，wasm 模块的内存和 JS 内存之间存在明显的分裂：
 
-When using wasm within JS, there is a sharp split between the wasm module's
-memory and the JS memory:
+- 每个 wasm 模块都有一个线性内存（在本文档的顶部描述），在实例化期间进行初始化。 **JS 代码可以自由读写这块内存**。
 
-- Each wasm module has a linear memory (described at the top of this document),
-  which is initialized during instantiation. **JS code can freely read and write
-  to this memory**.
+- 相比之下，wasm 代码不能*直接*访问 JS 对象。
 
-- By contrast, wasm code has no *direct* access to JS objects.
+因此，复杂的互操作以两种主要方式发生：
 
-Thus, sophisticated interop happens in two main ways:
+- 将二进制数据复制到或复制到 wasm 内存。 例如，这是向 Rust 端提供拥有的 `String` 的一种方式。
 
-- Copying in or out binary data to the wasm memory. For example, this is one way
-  to provide an owned `String` to the Rust side.
+- 建立一个显式的 JS 对象“堆”，然后给定“地址”。 这允许 wasm 代码间接引用 JS 对象（使用整数），并通过调用导入的 JS 函数对这些对象进行操作。
 
-- Setting up an explicit "heap" of JS objects which are then given
-  "addresses". This allows wasm code to refer to JS objects indirectly (using
-  integers), and operate on those objects by invoking imported JS functions.
-
-Fortunately, this interop story is very amenable to treatment through a generic
-"bindgen"-style framework: [wasm-bindgen]. The framework makes it possible to
-write idiomatic Rust function signatures that map to idiomatic JS functions,
-automatically.
+幸运的是，这个互操作的故事非常适合通过一个通用的“bindgen”风格的框架来处理：[wasm-bindgen]。 该框架可以编写自动映射到惯用 JS 函数的惯用 Rust 函数签名。
 
 [wasm-bindgen]: https://github.com/rustwasm/wasm-bindgen
 
-## Custom Sections
+## 自定义部分
 
-Custom sections allow embedding named arbitrary data into a wasm module. The
-section data is set at compile time and is read directly from the wasm module,
-it cannot be modified at runtime.
+自定义部分允许将命名的任意数据嵌入到 wasm 模块中。 段数据在编译时设置并直接从 wasm 模块读取，不能在运行时修改。
 
-In Rust, custom sections are static arrays (`[T; size]`) exposed with the
-`#[link_section]` attribute:
+在 Rust 中，自定义节是使用 `#[link_section]` 属性公开的静态数组（`[T; size]`）：
 
 ```rust
 #[link_section = "hello"]
 pub static SECTION: [u8; 24] = *b"This is a custom section";
 ```
 
-This adds a custom section named `hello` to the wasm file, the rust variable
-name `SECTION` is arbitrary, changing it wouldn't alter the behaviour. The
-contents are bytes of text here but could be any arbitrary data.
+这会在 wasm 文件中添加一个名为 `hello` 的自定义部分，rust 变量名称 `SECTION` 是任意的，更改它不会改变行为。 这里的内容是文本字节，但可以是任何任意数据。
 
-The custom sections can be read on the JS side using the
-[`WebAssembly.Module.customSections`] function, it takes a wasm Module and the
-section name as arguments and returns an Array of [`ArrayBuffer`]s. Multiple
-sections may be specified using the same name, in which case they will all
-appear in this array.
+自定义部分可以在 JS 端使用 [`WebAssembly.Module.customSections`] 函数读取，它接受一个 wasm 模块和部分名称作为参数，并返回一个 [`ArrayBuffer`] 数组。 可以使用相同的名称指定多个部分，在这种情况下，它们都将出现在此数组中。
 
 ```js
 WebAssembly.compileStreaming(fetch("sections.wasm"))
