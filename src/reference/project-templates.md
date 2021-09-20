@@ -1,14 +1,12 @@
-# Project Templates
+# 项目模板
 
-The Rust and WebAssembly working group curates and maintains a variety of
-project templates to help you kickstart new projects and hit the ground running.
+Rust 和 WebAssembly 工作组策划和维护各种项目模板，以帮助您启动新项目并开始运行。
 
 ## `wasm-pack-template`
 
-[This template][wasm-pack-template] is for starting a Rust and WebAssembly
-project to be used with [`wasm-pack`][wasm-pack].
+[此模板][wasm-pack-template] 用于启动 Rust 和 WebAssembly 项目，与 [`wasm-pack`][wasm-pack] 一起使用。
 
-Use `cargo generate` to clone this project template:
+使用 `cargo generate` 来克隆这个项目模板：
 
 ```
 cargo install cargo-generate
@@ -17,10 +15,9 @@ cargo generate --git https://github.com/rustwasm/wasm-pack-template.git
 
 ## `create-wasm-app`
 
-[This template][create-wasm-app] is for JavaScript projects that consume
-packages from npm that were created from Rust with [`wasm-pack`][wasm-pack].
+[此模板][create-wasm-app] 适用于使用来自 npm 的包的 JavaScript 项目，这些包是使用 [`wasm-pack`][wasm-pack] 从 Rust 创建的。
 
-Use it with `npm init`:
+与 `npm init` 一起使用：
 
 ```
 mkdir my-project
@@ -28,17 +25,13 @@ cd my-project/
 npm init wasm-app
 ```
 
-This template is often used alongside `wasm-pack-template`, where
-`wasm-pack-template` projects are installed locally with `npm link`, and pulled
-in as a dependency for a `create-wasm-app` project.
+该模板通常与 `wasm-pack-template` 一起使用，其中 `wasm-pack-template` 项目通过 `npm link` 安装在本地，并作为 `create-wasm-app` 项目的依赖项引入。
 
 ## `rust-webpack-template`
 
-[This template][rust-webpack-template] comes pre-configured with all the
-boilerplate for compiling Rust to WebAssembly and hooking that directly into a
-Webpack build pipeline with Webpack's [`rust-loader`][rust-loader].
+[此模板][rust-webpack-template] 预配置了所有样板，用于将 Rust 编译为 WebAssembly，并使用 Webpack 的 [`rust-loader`][rust-loader] 将其直接挂接到 Webpack 构建管道中。
 
-Use it with `npm init`:
+与 `npm init` 一起使用：
 
 ```
 mkdir my-project

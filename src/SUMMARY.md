@@ -20,7 +20,7 @@
 - [Reference](./reference/index.md)
   - [你应该知道的Crates](./reference/crates.md)
   - [你应该知道的工具](./reference/tools.md)
-  - [Project Templates](./reference/project-templates.md)
+  - [项目模板](./reference/project-templates.md)
   - [Debugging](./reference/debugging.md)
   - [Time Profiling](./reference/time-profiling.md)
   - [Shrinking `.wasm` Size](./reference/code-size.md)
