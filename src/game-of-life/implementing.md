@@ -164,15 +164,9 @@ impl Universe {
 }
 ```
 
-So far, the state of the universe is represented as a vector of cells. To make
-this human readable, let's implement a basic text renderer. The idea is to write
-the universe line by line as text, and for each cell that is alive, print the
-Unicode character `◼` ("black medium square"). For dead cells, we'll print `◻`
-(a "white medium square").
+到目前为止，宇宙的状态被表示为一个细胞向量。 为了使人能够读懂这些内容，让我们实现一个基本的文本渲染器。 这个想法是将宇宙一行一行地写成文本，对于每个活着的单元格，打印 Unicode 字符`◼`（“黑色中型方块”）。 对于死细胞，我们将打印`◻`（一个“白色中等正方形”）。
 
-By implementing the [`Display`] trait from Rust's standard library, we can add a
-way to format a structure in a user-facing manner. This will also automatically
-give us a [`to_string`] method.
+通过实现 Rust 标准库中的 [`Display`] 特性，我们可以添加一种以面向用户的方式格式化结构的方法。 这也会自动给我们一个 [`to_string`] 方法。 
 
 [`Display`]: https://doc.rust-lang.org/1.25.0/std/fmt/trait.Display.html
 [`to_string`]: https://doc.rust-lang.org/1.25.0/std/string/trait.ToString.html
@@ -195,8 +189,7 @@ impl fmt::Display for Universe {
 }
 ```
 
-Finally, we define a constructor that initializes the universe with an
-interesting pattern of live and dead cells, as well as a `render` method:
+最后，我们定义了一个构造函数，用一个有趣的活细胞和死细胞的模式来初始化宇宙，以及一个`render'方法:
 
 ```rust
 /// Public methods, exported to JavaScript.
@@ -231,15 +224,13 @@ impl Universe {
 }
 ```
 
-With that, the Rust half of our Game of Life implementation is complete!
+这样，我们的生命游戏的Rust部分就完成了。
 
-Recompile it to WebAssembly by running `wasm-pack build` within the
-`wasm-game-of-life` directory.
+在`wasm-game-of-life`目录下运行`wasm-pack build`，将其重新编译为WebAssembly。
 
-## Rendering with JavaScript
+## 用JavaScript进行渲染
 
-First, let's add a `<pre>` element to `wasm-game-of-life/www/index.html` to
-render the universe into, just above the `<script>` tag:
+首先，让我们在`wasm-game-of-life/www/index.html`中添加一个`<pre>`元素，将宇宙渲染进去，就在`<script>`标签上方:
 
 ```html
 <body>
@@ -248,9 +239,7 @@ render the universe into, just above the `<script>` tag:
 </body>
 ```
 
-Additionally, we want the `<pre>` centered in the middle of the Web page. We can
-use CSS flex boxes to accomplish this task. Add the following `<style>` tag
-inside `wasm-game-of-life/www/index.html`'s `<head>`:
+此外，我们希望`<pre>`在网页的中间位置。我们可以使用CSS柔性框来完成这个任务。在`wasm-game-of-life/www/index.html`的`<head>`内添加以下`<style>`标签:
 
 ```html
 <style>
@@ -268,24 +257,21 @@ inside `wasm-game-of-life/www/index.html`'s `<head>`:
 </style>
 ```
 
-At the top of `wasm-game-of-life/www/index.js`, let's fix our import to bring in
-the `Universe` rather than the old `greet` function:
+在 `wasm-game-of-life/www/index.js` 的顶部，让我们修复我们的导入以引入 `Universe` 而不是旧的 `greet` 函数： 
 
 ```js
 import { Universe } from "wasm-game-of-life";
 ```
 
-Also, let's get that `<pre>` element we just added and instantiate a new
-universe:
+另外，让我们获取刚刚添加的 `<pre>` 元素并实例化一个新的 Universe：
+
 
 ```js
 const pre = document.getElementById("game-of-life-canvas");
 const universe = Universe.new();
 ```
 
-The JavaScript runs in [a `requestAnimationFrame`
-loop][requestAnimationFrame]. On each iteration, it draws the current universe
-to the `<pre>`, and then calls `Universe::tick`.
+JavaScript在[一个`requestAnimationFrame`循环][requestAnimationFrame]中运行。在每个迭代中，它将当前的宇宙画到`<pre>`，然后调用`Universe::tick`。
 
 [requestAnimationFrame]: https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
 
@@ -298,36 +284,25 @@ const renderLoop = () => {
 };
 ```
 
-To start the rendering process, all we have to do is make the initial call for
-the first iteration of the rendering loop:
+为了开始渲染过程，我们所要做的就是为渲染循环的第一次迭代进行初始调用:
 
 ```js
 requestAnimationFrame(renderLoop);
 ```
 
-Make sure your development server is still running (run `npm run start` inside
-`wasm-game-of-life/www`) and this is what
-[http://localhost:8080/](http://localhost:8080/) should look like:
+确保你的开发服务器仍在运行（在`wasm-game-of-life/www`内运行`npm run start`），这就是[http://localhost:8080/](http://localhost:8080/)应该有的样子:
 
 [![Screenshot of the Game of Life implementation with text rendering](../images/game-of-life/initial-game-of-life-pre.png)](../images/game-of-life/initial-game-of-life-pre.png)
 
-## Rendering to Canvas Directly from Memory
+## 直接从内存向画布渲染
 
-Generating (and allocating) a `String` in Rust and then having `wasm-bindgen`
-convert it to a valid JavaScript string makes unnecessary copies of the
-universe's cells. As the JavaScript code already knows the width and
-height of the universe, and can read WebAssembly's linear memory that make up
-the cells directly, we'll modify the `render` method to return a pointer to the
-start of the cells array.
+在Rust中生成（和分配）一个`String`，然后让`wasm-bindgen`将其转换为有效的JavaScript字符串，就会对宇宙的单元格进行不必要的复制。由于JavaScript代码已经知道了宇宙的宽度和高度，并且可以直接读取构成单元格的WebAssembly的线性内存，我们将修改`render`方法以返回一个指向单元格数组开始的指针。
 
-Also, instead of rendering Unicode text, we'll switch to using the [Canvas
-API]. We will use this design in the rest of the tutorial.
+另外，我们将改用[Canvas API]来代替渲染Unicode文本。我们将在本教程的其余部分使用这种设计。
 
 [Canvas API]: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
 
-Inside `wasm-game-of-life/www/index.html`, let's replace the `<pre>` we added
-earlier with a `<canvas>` we will render into (it too should be within the
-`<body>`, before the `<script>` that loads our JavaScript):
+在`wasm-game-of-life/www/index.html`中，让我们把之前添加的`<pre>`替换成我们要渲染的`<canvas>`（它也应该在`<body>`中，在加载我们JavaScript的`<script>`之前）：
 
 ```html
 <body>
@@ -336,10 +311,7 @@ earlier with a `<canvas>` we will render into (it too should be within the
 </body>
 ```
 
-To get the necessary information from the Rust implementation, we'll need to add
-some more getter functions for a universe's width, height, and pointer to its
-cells array. All of these are exposed to JavaScript as well. Make these
-additions to `wasm-game-of-life/src/lib.rs`:
+为了从Rust的实现中获得必要的信息，我们需要为一个宇宙的宽度、高度和指向其单元格数组的指针增加一些getter函数。所有这些也都暴露在JavaScript中。在`wasm-game-of-life/src/lib.rs`中增加这些内容:
 
 ```rust
 /// Public methods, exported to JavaScript.
@@ -361,9 +333,7 @@ impl Universe {
 }
 ```
 
-Next, in `wasm-game-of-life/www/index.js`, let's also import `Cell` from
-`wasm-game-of-life`, and define some constants that we will use when rendering
-to the canvas:
+接下来，在`wasm-game-of-life/www/index.js`中，让我们也从`wasm-game-of-life`中导入`Cell`，并定义一些常量，我们将在渲染到画布时使用：
 
 ```js
 import { Universe, Cell } from "wasm-game-of-life";
@@ -374,8 +344,7 @@ const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 ```
 
-Now, let's rewrite the rest of this JavaScript code to no longer write to the
-`<pre>`'s `textContent` but instead draw to the `<canvas>`:
+现在，让我们重写这段JavaScript代码的其余部分，不再写入`<pre>`的`textContent`，而是绘制到`<canvas>`:
 
 ```js
 // Construct the universe, and get its width and height.
@@ -401,9 +370,7 @@ const renderLoop = () => {
 };
 ```
 
-To draw the grid between cells, we draw a set of equally-spaced horizontal
-lines, and a set of equally-spaced vertical lines. These lines criss-cross to
-form the grid.
+为了画出单元格之间的网格，我们画了一组等距的水平线，和一组等距的垂直线。这些线纵横交错，形成网格。
 
 ```js
 const drawGrid = () => {
@@ -426,13 +393,7 @@ const drawGrid = () => {
 };
 ```
 
-We can directly access WebAssembly's linear memory via `memory`, which is
-defined in the raw wasm module `wasm_game_of_life_bg`. To draw the cells, we
-get a pointer to the universe's cells, construct a `Uint8Array` overlaying the
-cells buffer, iterate over each cell, and draw a white or black rectangle
-depending on whether the cell is dead or alive, respectively. By working with
-pointers and overlays, we avoid copying the cells across the boundary on every
-tick.
+我们可以通过`memory`直接访问WebAssembly的线性内存，它被定义在原始wasm模块`wasm_game_of_life_bg`。为了绘制单元格，我们得到一个指向宇宙单元格的指针，构建一个覆盖单元格缓冲区的`Uint8Array`，遍历每个单元格，并根据单元格是死是活，分别绘制一个白色或黑色的矩形。通过使用指针和覆盖，我们避免了在每次打勾时将单元格复制到边界上。
 
 ```js
 // Import the WebAssembly memory at the top of the file.
@@ -471,8 +432,7 @@ const drawCells = () => {
 };
 ```
 
-To start the rendering process, we'll use the same code as above to start the
-first iteration of the rendering loop:
+为了开始渲染过程，我们将使用与上面相同的代码来启动渲染循环的第一次迭代:
 
 ```js
 drawGrid();
@@ -480,56 +440,39 @@ drawCells();
 requestAnimationFrame(renderLoop);
 ```
 
-Note that we call `drawGrid()` and `drawCells()` here _before_ we call
-`requestAnimationFrame()`. The reason we do this is so that the _initial_ state
-of the universe is drawn before we make modifications. If we instead simply
-called `requestAnimationFrame(renderLoop)`, we'd end up with a situation where
-the first frame that was drawn would actually be _after_ the first call to
-`universe.tick()`, which is the second "tick" of the life of these cells.
+注意，我们在这里调用`drawGrid()`和`drawCells()`，然后再调用`requestAnimationFrame()`。我们这样做的原因是为了在我们进行修改之前画出宇宙的_初始_状态。如果我们只是简单地调用`requestAnimationFrame(renderLoop)`，我们最终会出现这样的情况：第一个被绘制的帧实际上是在第一次调用`universe.tick()`之后，也就是这些单元格生命中的第二个 "打勾"。
 
 ## It Works!
 
-Rebuild the WebAssembly and bindings glue by running this command from within
-the root `wasm-game-of-life` directory:
+通过从 `wasm-game-of-life` 目录中运行以下命令来重建 WebAssembly 和绑定：
 
 ```
 wasm-pack build
 ```
 
-Make sure your development server is still running. If it isn't, start it again
-from within the `wasm-game-of-life/www` directory:
+确保您的开发服务器仍在运行。 如果不是，请从 `wasm-game-of-life/www` 目录中重新启动它：
 
 ```
 npm run start
 ```
 
-If you refresh [http://localhost:8080/](http://localhost:8080/), you should be
-greeted with an exciting display of life!
+如果你刷新[http://localhost:8080/](http://localhost:8080/)，你应该会看到精彩的生活展示！ 
 
 [![Screenshot of the Game of Life implementation](../images/game-of-life/initial-game-of-life.png)](../images/game-of-life/initial-game-of-life.png)
 
-As an aside, there is also a really neat algorithm for implementing the Game of
-Life called [hashlife](https://en.wikipedia.org/wiki/Hashlife). It uses
-aggressive memoizing and can actually get *exponentially faster* to compute
-future generations the longer it runs! Given that, you might be wondering why we
-didn't implement hashlife in this tutorial. It is out of scope for this text,
-where we are focusing on Rust and WebAssembly integration, but we highly
-encourage you to go learn about hashlife on your own!
+顺便说一句，还有一个非常简洁的算法来实现生命游戏，称为 [hashlife](https://en.wikipedia.org/wiki/Hashlife)。 它使用积极的记忆，并且实际上可以*指数更快*来计算它运行的时间越长的后代！ 鉴于此，您可能想知道为什么我们没有在本教程中实现 hashlife。 这超出了本文的范围，我们专注于 Rust 和 WebAssembly 的集成，但我们强烈建议您自行了解 hashlife！
 
-## Exercises
+## 练习
 
-* Initialize the universe with a single space ship.
+* 用单个太空船初始化宇宙。
 
-* Instead of hard-coding the initial universe, generate a random one, where each
-  cell has a fifty-fifty chance of being alive or dead.
+* 不是对初始宇宙进行硬编码，而是生成一个随机的宇宙，其中每个细胞有 550 次存活或死亡的机会。 
 
-  *Hint: use [the `js-sys` crate](https://crates.io/crates/js-sys) to import
-  [the `Math.random` JavaScript
-  function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).*
+  *提示：使用[`js-sys` crate](https://crates.io/crates/js-sys) 导入[`Math.random` JavaScript 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).* 
 
   <details>
-    <summary>Answer</summary>
-    *First, add `js-sys` as a dependency in `wasm-game-of-life/Cargo.toml`:*
+    <summary>答案</summary>
+    *首先，在`wasm-game-of-life/Cargo.toml`中添加`js-sys`作为依赖项：*
 
     ```toml
     # ...
@@ -538,7 +481,7 @@ encourage you to go learn about hashlife on your own!
     # ...
     ```
 
-    *Then, use the `js_sys::Math::random` function to flip a coin:*
+    *然后，使用`js_sys::Math::random`函数来投掷硬币：*
 
     ```rust
     extern crate js_sys;
@@ -553,17 +496,12 @@ encourage you to go learn about hashlife on your own!
     ```
   </details>
 
-* Representing each cell with a byte makes iterating over cells easy, but it
-  comes at the cost of wasting memory. Each byte is eight bits, but we only
-  require a single bit to represent whether each cell is alive or dead. Refactor
-  the data representation so that each cell uses only a single bit of space.
+* 用一个字节表示每个单元，使单元的迭代变得容易，但它的代价是浪费了内存。每个字节有八个比特，但是我们只需要一个比特来表示每个细胞是活的还是死的。重构数据表示，使每个单元格只使用一个比特的空间。
 
   <details>
-    <summary>Answer</summary>
+    <summary>答案</summary>
 
-    In Rust, you can use [the `fixedbitset` crate and its `FixedBitSet`
-    type](https://crates.io/crates/fixedbitset) to represent cells instead of
-    `Vec<Cell>`:
+    在Rust中，你可以使用[`fixedbitset` crate和它的`FixedBitSet`类型](https://crates.io/crates/fixedbitset)来表示单元，而不是`Vec<Cell>`:
 
     ```rust
     // Make sure you also added the dependency to Cargo.toml!
@@ -580,7 +518,7 @@ encourage you to go learn about hashlife on your own!
     }
     ```
 
-    The Universe constructor can be adjusted the following way:
+    Universe 构造函数可以通过以下方式进行调整：
 
     ```rust
     pub fn new() -> Universe {
@@ -602,8 +540,7 @@ encourage you to go learn about hashlife on your own!
     }
     ```
 
-    To update a cell in the next tick of the universe, we use the `set` method
-    of `FixedBitSet`:
+    要在宇宙的下一个刻度中更新单元格，我们使用`FixedBitSet`的`set`方法：
 
     ```rust
     next.set(idx, match (cell, live_neighbors) {
@@ -615,8 +552,7 @@ encourage you to go learn about hashlife on your own!
     });
     ```
 
-    To pass a pointer to the start of the bits to JavaScript, you can convert
-    the `FixedBitSet` to a slice and then convert the slice to a pointer:
+    要将指向位开头的指针传递给 JavaScript，您可以将 `FixedBitSet` 转换为切片，然后将切片转换为指针：
 
     ```rust
     #[wasm_bindgen]
@@ -629,16 +565,13 @@ encourage you to go learn about hashlife on your own!
     }
     ```
 
-    In JavaScript, constructing a `Uint8Array` from Wasm memory is the same as
-    before, except that the length of the array is not `width * height` anymore,
-    but `width * height / 8` since we have a cell per bit rather than per byte:
+    在 JavaScript 中，从 Wasm 内存构造一个 `Uint8Array` 和之前一样，只是数组的长度不再是 `width * height`，而是 `width * height / 8` 因为我们每比特有一个单元格而不是 每字节：
 
     ```js
     const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
     ```
 
-    Given an index and `Uint8Array`, you can determine whether the
-    *n<sup>th</sup>* bit is set with the following function:
+    给定一个索引和 `Uint8Array`，您可以使用以下函数确定是否设置了 *n<sup>th</sup>* 位：
 
     ```js
     const bitIsSet = (n, arr) => {
@@ -648,7 +581,7 @@ encourage you to go learn about hashlife on your own!
     };
     ```
 
-    Given all that, the new version of `drawCells` looks like this:
+    鉴于所有这些，新版本的 `drawCells` 看起来像这样：
 
     ```js
     const drawCells = () => {
