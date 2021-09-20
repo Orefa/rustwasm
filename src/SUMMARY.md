@@ -15,7 +15,7 @@
     - [添加交互性](./game-of-life/interactivity.md)
     - [时间分析](./game-of-life/time-profiling.md)
     - [缩小`.wasm` 大小](./game-of-life/code-size.md)
-    - [Publishing to npm](./game-of-life/publishing-to-npm.md)
+    - [发布到 npm](./game-of-life/publishing-to-npm.md)
 --------------------------------------------------------------------------------
 - [Reference](./reference/index.md)
   - [Crates You Should Know](./reference/crates.md)

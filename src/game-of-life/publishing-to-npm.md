@@ -1,57 +1,49 @@
-# Publishing to npm
+# 发布到 npm
 
-Now that we have a working, fast, *and* small `wasm-game-of-life` package, we
-can publish it to npm so other JavaScript developers can reuse it, if they ever
-need an off-the-shelf Game of Life implementation.
+现在我们有了一个有效的、快速的、*和*小的 `wasm-game-of-life` 包，我们可以将它发布到 npm 以便其他 JavaScript 开发人员可以重用它，如果他们需要一个现成的游戏 生活执行。
 
-## Prerequisites
+## 先决条件
 
-First, [make sure you have an npm account](https://www.npmjs.com/signup).
+首先，[确保您有一个 npm 帐户](https://www.npmjs.com/signup)。
 
-Second, make sure you are logged into your account locally, by running this
-command:
+其次，通过运行以下命令确保您在本地登录到您的帐户： 
 
 ```
 wasm-pack login
 ```
 
-## Publishing
+## 发布
 
-Make sure that the `wasm-game-of-life/pkg` build is up to date by running
-`wasm-pack` inside the `wasm-game-of-life` directory:
+通过在 `wasm-game-of-life` 目录中运行 `wasm-pack`，确保 `wasm-game-of-life/pkg` 构建是最新的： 
 
 ```
 wasm-pack build
 ```
 
-Take a moment to check out the contents of `wasm-game-of-life/pkg` now, this is
-what we are publishing to npm in the next step!
+现在花点时间查看一下 `wasm-game-of-life/pkg` 的内容，这就是我们下一步要发布到 npm 的内容！
 
-When you're ready, run `wasm-pack publish` to upload the package to npm:
+准备好后，运行 `wasm-pack publish` 将包上传到 npm： 
 
 ```
 wasm-pack publish
 ```
 
-That's all it takes to publish to npm!
+这就是发布到 npm 所需的全部内容！
 
-...except other folks have also done this tutorial, and therefore the
-`wasm-game-of-life` name is taken on npm, and that last command probably didn't
-work.
+...除了其他人也完成了本教程，因此在 npm 上使用了 `wasm-game-of-life` 名称，最后一个命令可能不起作用。
 
-Open up `wasm-game-of-life/Cargo.toml` and add your username to the end of the
-`name` to disambiguate the package in a unique way:
+打开 `wasm-game-of-life/Cargo.toml` 并将您的用户名添加到 `name` 的末尾，以独特的方式消除包的歧义：
 
 ```toml
 [package]
 name = "wasm-game-of-life-my-username"
 ```
 
-Then, rebuild and publish again:
+然后，重建并再次发布：
 
 ```
 wasm-pack build
 wasm-pack publish
 ```
 
-This time it should work!
+这次应该可以了！
