@@ -18,7 +18,7 @@
     - [发布到 npm](./game-of-life/publishing-to-npm.md)
 --------------------------------------------------------------------------------
 - [Reference](./reference/index.md)
-  - [Crates You Should Know](./reference/crates.md)
+  - [你应该知道的Crates](./reference/crates.md)
   - [Tools You Should Know](./reference/tools.md)
   - [Project Templates](./reference/project-templates.md)
   - [Debugging](./reference/debugging.md)
