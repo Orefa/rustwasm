@@ -1,81 +1,56 @@
-# Tools You Should Know
+# 你应该知道的工具
 
-This is a curated list of awesome tools you should know about when doing Rust
-and WebAssembly development.
+这是在进行 Rust 和 WebAssembly 开发时你应该知道的一些很棒的工具的精选列表。
 
-## Development, Build, and Workflow Orchestration
+## 开发、构建和工作流编排
 
 ### `wasm-pack` | [repository](https://github.com/rustwasm/wasm-pack)
 
-`wasm-pack` seeks to be a one-stop shop for building and working with Rust-
-generated WebAssembly that you would like to interoperate with JavaScript, on
-the Web or with Node.js. `wasm-pack` helps you build and publish Rust-generated
-WebAssembly to the npm registry to be used alongside any other JavaScript
-package in workflows that you already use.
+`wasm-pack` 旨在成为构建和使用 Rust 生成的 WebAssembly 的一站式商店，您希望与 JavaScript、Web 或 Node.js 进行互操作。 `wasm-pack` 可帮助您构建 Rust 生成的 WebAssembly 并将其发布到 npm 仓库，以便与您已经使用的工作流中的任何其他 JavaScript 包一起使用。 
 
-## Optimizing and Manipulating `.wasm` Binaries
+## 优化和操作 `.wasm` 二进制文件
 
 ### `wasm-opt` | [repository](https://github.com/WebAssembly/binaryen)
 
-The `wasm-opt` tool reads WebAssembly as input, runs transformation,
-optimization, and/or instrumentation passes on it, and then emits the
-transformed WebAssembly as output. Running it on the `.wasm` binaries produced
-by LLVM by way of `rustc` will usually create `.wasm` binaries that are both
-smaller and execute faster. This tool is a part of the `binaryen` project.
+`wasm-opt` 工具将 WebAssembly 读取为输入，对其运行转换、优化和/或检测传递，然后将转换后的 WebAssembly 作为输出发出。 在 LLVM 通过 `rustc` 生成的 `.wasm` 二进制文件上运行它通常会创建更小且执行速度更快的 `.wasm` 二进制文件。 这个工具是`binaryen` 项目的一部分。 
 
 ### `wasm2js` | [repository](https://github.com/WebAssembly/binaryen)
 
-The `wasm2js` tool compiles WebAssembly into "almost asm.js". This is great for
-supporting browsers that don't have a WebAssembly implementation, such as
-Internet Explorer 11. This tool is a part of the `binaryen` project.
+`wasm2js` 工具将 WebAssembly 编译成“几乎是 asm.js”。 这非常适合支持没有 WebAssembly 实现的浏览器，例如 Internet Explorer 11。这个工具是 `binaryen` 项目的一部分。
 
 ### `wasm-gc` | [repository](https://github.com/alexcrichton/wasm-gc)
 
-A small tool to garbage collect a WebAssembly module and remove all unneeded
-exports, imports, functions, etc. This is effectively a `--gc-sections` linker
-flag for WebAssembly.
+一个垃圾收集 WebAssembly 模块并删除所有不需要的导出、导入、函数等的小工具。这实际上是 WebAssembly 的一个 `--gc-sections` 链接器标志。
 
-You don't usually need to use this tool yourself because of two reasons:
+由于两个原因，您通常不需要自己使用此工具：
 
-1. `rustc` now has a new enough version of `lld` that it supports the
-   `--gc-sections` flag for WebAssembly. This is automatically enabled for LTO
-   builds.
-2. The `wasm-bindgen` CLI tool runs `wasm-gc` for you automatically.
+1. `rustc` 现在有一个足够新的 `lld` 版本，它支持 WebAssembly 的 `--gc-sections` 标志。 这会自动为 LTO 构建启用。
+2. `wasm-bindgen` CLI 工具会自动为你运行 `wasm-gc`。
 
 ### `wasm-snip` | [repository](https://github.com/rustwasm/wasm-snip)
 
-`wasm-snip` replaces a WebAssembly function's body with an `unreachable`
-instruction.
+`wasm-snip` 用 `unreachable` 指令替换了 WebAssembly 函数的主体。
 
-Maybe you know that some function will never be called at runtime, but the
-compiler can't prove that at compile time? Snip it! Then run `wasm-gc` again and
-all the functions it transitively called (which could also never be called at
-runtime) will get removed too.
+也许您知道某些函数在运行时永远不会被调用，但是编译器无法在编译时证明这一点？ 剪吧！ 然后再次运行`wasm-gc`，它传递调用的所有函数（在运行时也永远不会被调用）也将被删除。
 
-This is useful for forcibly removing Rust's panicking infrastructure in
-non-debug production builds.
+这对于在非调试生产版本中强行删除 Rust 的恐慌基础架构很有用。
 
-## Inspecting `.wasm` Binaries
+## 检查 `.wasm` 二进制文件
 
 ### `twiggy` | [repository](https://github.com/rustwasm/twiggy)
 
-`twiggy` is a code size profiler for `.wasm` binaries. It analyzes a binary's
-call graph to answer questions like:
+`twiggy` 是 `.wasm` 二进制文件的代码大小分析器。 它分析二进制的调用图来回答以下问题：
 
-* Why was this function included in the binary in the first place? I.e. which
-  exported functions are transitively calling it?
-* What is the retained size of this function? I.e. how much space would be saved
-  if I removed it and all the functions that become dead code after its removal.
+* 为什么这个函数首先包含在二进制文件中？ IE。 哪些导出的函数正在传递调用它？
+* 这个函数的保留大小是多少？ IE。 如果我删除它以及删除后成为死代码的所有函数，将节省多少空间。
 
-Use `twiggy` to make your binaries slim!
+使用 `twiggy` 使你的二进制文件变得苗条！
 
 ### `wasm-objdump` | [repository](https://github.com/WebAssembly/wabt)
 
-Print low-level details about a `.wasm` binary and each of its sections. Also
-supports disassembling into the WAT text format. It's like `objdump` but for
-WebAssembly. This is a part of the WABT project.
+打印有关 `.wasm` 二进制文件及其每个部分的低级详细信息。 还支持反汇编成 WAT 文本格式。 它就像`objdump`，但用于WebAssembly。 这是 WABT 项目的一部分。
 
 ### `wasm-nm` | [repository](https://github.com/fitzgen/wasm-nm)
 
-List the imported, exported, and private function symbols defined within a
-`.wasm` binary. It's like `nm` but for WebAssembly.
+列出在 `.wasm` 二进制文件中定义的导入、导出和私有函数符号。 它就像 `nm` 但对于 WebAssembly。 
+

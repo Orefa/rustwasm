@@ -19,7 +19,7 @@
 --------------------------------------------------------------------------------
 - [Reference](./reference/index.md)
   - [你应该知道的Crates](./reference/crates.md)
-  - [Tools You Should Know](./reference/tools.md)
+  - [你应该知道的工具](./reference/tools.md)
   - [Project Templates](./reference/project-templates.md)
   - [Debugging](./reference/debugging.md)
   - [Time Profiling](./reference/time-profiling.md)
