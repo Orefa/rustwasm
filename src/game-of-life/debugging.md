@@ -53,7 +53,7 @@ macro_rules! log {
 }
 ```
 
-现在，我们可以通过在Rust代码中插入对`log`的调用来开始将信息记录到控制台。例如，为了记录每个细胞的状态、活的邻居数和下一个状态，我们可以这样修改`wasm-game-of-life/src/lib.rs`:
+现在，我们可以通过在Rust代码中插入对`log`的调用来开始将信息记录到控制台。例如，为了记录每个单元格的状态、活的邻居数和下一个状态，我们可以这样修改`wasm-game-of-life/src/lib.rs`:
 
 ```diff
 diff --git a/src/lib.rs b/src/lib.rs

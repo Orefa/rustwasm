@@ -1,4 +1,6 @@
-# Adding Interactivity
+# 添加交互性
+
+我们将继续探索 JavaScript 和 WebAssembly 界面，为我们的 Game of Life 实现添加一些交互功能。 我们将使用户能够通过单击来切换单元格是活的还是死的，并允许暂停游戏，这使得绘制单元格图案变得更加容易。 
 
 We will continue to explore the JavaScript and WebAssembly interface by adding
 some interactive features to our Game of Life implementation. We will enable
