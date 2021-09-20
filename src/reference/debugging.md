@@ -62,7 +62,7 @@ used.
 * [Microsoft Edge Developer Tools — Console](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide/console)
 * [Get Started with the Chrome DevTools Console](https://developers.google.com/web/tools/chrome-devtools/console/get-started)
 
-## Logging Panics
+## 记录 Panics
 
 [The `console_error_panic_hook` crate logs unexpected panics to the developer
 console via `console.error`.][panic-hook] Rather than getting cryptic,

@@ -1,22 +1,14 @@
-# Debugging
+# 调试
 
-Before we write much more code, we will want to have some debugging tools in our
-belt for when things go wrong. Take a moment to review the [reference page
-listing tools and approaches available for debugging Rust-generated
-WebAssembly][reference-debugging].
+在我们写更多的代码之前，我们会想在我们的腰带上有一些调试工具，以备出错时使用。花点时间回顾一下[参考页列出了可用来调试Rust生成的WebAssembly的工具和方法][reference-debugging].
 
 [reference-debugging]: ../reference/debugging.html
 
-## Enable Logging for Panics
+## 为 Panics 启用日志记录
 
-[If our code panics, we want informative error messages to appear in the
-developer console.](../reference/debugging.html#logging-panics)
+[如果我们的代码出现混乱，我们希望在开发者控制台中显示信息性错误消息。](../reference/debugging.html#记录-panics)
 
-Our `wasm-pack-template` comes with an optional, enabled-by-default dependency
-on [the `console_error_panic_hook` crate][panic-hook] that is configured in
-`wasm-game-of-life/src/utils.rs`. All we need to do is install the hook in an
-initialization function or common code path. We can call it inside the
-`Universe::new` constructor in `wasm-game-of-life/src/lib.rs`:
+我们的 `wasm-pack-template` 带有一个可选的、默认启用的对 [`console_error_panic_hook` crate][panic-hook] 的依赖，该依赖被配置在 `wasm-game-of-life/src/utils.rs` 中。我们需要做的就是在初始化函数或公共代码路径中安装这个钩子。我们可以在 `wasm-ame-of-life/src/lib.rs` 中的 `Universe::new` 构造函数中调用它。
 
 ```rust
 pub fn new() -> Universe {
@@ -28,13 +20,11 @@ pub fn new() -> Universe {
 
 [panic-hook]: https://github.com/rustwasm/console_error_panic_hook
 
-## Add Logging to our Game of Life
+## 在我们的生活游戏中加入记录的内容
 
-Let's [use the `console.log` function via the `web-sys` crate to add some
-logging][logging] about each cell in our `Universe::tick` function.
+让我们[通过`web-sys` crate 使用 `console.log` 函数来添加一些关于我们 `Universe::tick` 函数中每个单元的日志][logging]。
 
-First, add `web-sys` as a dependency and enable its `"console"` feature in
-`wasm-game-of-life/Cargo.toml`:
+首先，添加 `web-sys` 作为依赖，并在 `wasm-game-of-life/Cargo.toml` 中启用其`"console"`功能:
 
 ```toml
 [dependencies]
@@ -48,8 +38,7 @@ features = [
 ]
 ```
 
-For ergonomics, we'll wrap the `console.log` function up in a `println!`-style
-macro:
+为了符合人体工程学，我们将把`console.log`函数包装成一个`println!`风格的宏:
 
 [logging]: ../reference/debugging.html#logging-with-the-console-apis
 
@@ -64,9 +53,7 @@ macro_rules! log {
 }
 ```
 
-Now, we can start logging messages to the console by inserting calls to `log` in
-Rust code. For example, to log each cell's state, live neighbors count, and next
-state, we could modify `wasm-game-of-life/src/lib.rs` like this:
+现在，我们可以通过在Rust代码中插入对`log`的调用来开始将信息记录到控制台。例如，为了记录每个细胞的状态、活的邻居数和下一个状态，我们可以这样修改`wasm-game-of-life/src/lib.rs`:
 
 ```diff
 diff --git a/src/lib.rs b/src/lib.rs
@@ -99,15 +86,11 @@ index f757641..a30e107 100755
          }
 ```
 
-## Using a Debugger to Pause Between Each Tick
+## 使用调试器在每个 Tick 之间进行停顿
 
-[Browser's stepping debuggers are useful for inspecting the JavaScript that our
-Rust-generated WebAssembly interacts
-with.](../reference/debugging.html#using-a-debugger)
+[浏览器的步进调试器对于检查我们的 Rust 生成的 WebAssembly 与之交互的 JavaScript 很有用。](../reference/debugging.html#using-a-debugger)
 
-For example, we can use the debugger to pause on each iteration of our
-`renderLoop` function by placing [a JavaScript `debugger;` statement][dbg-stmt]
-above our call to `universe.tick()`.
+例如，我们可以使用调试器通过将 [一个 JavaScript `debugger;` 语句][dbg-stmt] 放在我们对 `universe.tick()` 的调用上方来暂停 `renderLoop` 函数的每次迭代。
 
 ```js
 const renderLoop = () => {
@@ -121,19 +104,14 @@ const renderLoop = () => {
 };
 ```
 
-This provides us with a convenient checkpoint for inspecting logged messages,
-and comparing the currently rendered frame to the previous one.
+这为我们提供了一个方便的检查点，用于检查记录的消息，并将当前渲染的帧与前一帧进行比较。
 
 [dbg-stmt]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger
 
 [![Screenshot of debugging the Game of Life](../images/game-of-life/debugging.png)](../images/game-of-life/debugging.png)
 
-## Exercises
+## 练习
 
-* Add logging to the `tick` function that records the row and column of each
-  cell that transitioned states from live to dead or vice versa.
+* 向 `tick` 函数添加日志记录，记录每个单元格的行和列，这些单元格将状态从活动状态转换为死状态，反之亦然。
 
-* Introduce a `panic!()` in the `Universe::new` method. Inspect the panic's
-  backtrace in your Web browser's JavaScript debugger. Disable debug symbols,
-  rebuild without the `console_error_panic_hook` optional dependency, and
-  inspect the stack trace again. Not as useful is it?
+* 在 `Universe::new` 方法中引入 `panic!()`。 在 Web 浏览器的 JavaScript 调试器中检查恐慌的回溯。 禁用调试符号，在没有 `console_error_panic_hook` 可选依赖项的情况下重建，并再次检查堆栈跟踪。 不是那么有用吗？ 
